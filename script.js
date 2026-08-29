@@ -650,15 +650,28 @@ function transitionToLoading() {
 
 // Helper to transition screens cleanly
 function transitionScreen(from, to) {
-  from.style.display = 'block'; // Keep display block explicitly so it fades out
-  from.classList.remove('active');
-  setTimeout(() => {
-    from.style.display = 'none';
+  if (!from) {
+    from = document.querySelector('.screen.active');
+  }
+  if (from === to) return;
+  
+  if (from) {
+    from.style.display = 'block'; // Keep display block explicitly so it fades out
+    from.classList.remove('active');
+    setTimeout(() => {
+      from.style.display = 'none';
+      showTo();
+    }, 400);
+  } else {
+    showTo();
+  }
+
+  function showTo() {
     to.style.display = 'block';
     setTimeout(() => {
       to.classList.add('active');
     }, 50);
-  }, 400);
+  }
 }
 
 // --- 1. Form validation sheet ---
@@ -682,6 +695,7 @@ function setupFormValidation() {
 
   btnStartQuiz.addEventListener('click', () => {
     if (btnStartQuiz.disabled) return;
+    btnStartQuiz.disabled = true; // prevent double clicks
     sound.playConfirm();
     
     testerInfo = {
@@ -691,7 +705,6 @@ function setupFormValidation() {
       contact: betaContact.value.trim()
     };
     
-    transitionScreen(screenForm, screenQuiz);
     startQuiz();
   });
 }
@@ -739,7 +752,7 @@ function loadQuizPage() {
     scrollContainer.offsetHeight; // trigger reflow
     scrollContainer.style.animation = 'unfurlScroll 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards';
     
-    transitionScreen(screenQuiz, screenChapter);
+    transitionScreen(null, screenChapter);
     
     const proceedClick = () => {
       scrollContainer.removeEventListener('click', proceedClick);
@@ -759,12 +772,12 @@ function loadQuizPage() {
         ];
         playCustomStory(midStory, () => {
           quizPageIndex++;
-          transitionScreen(screenStory, screenQuiz);
+          transitionScreen(null, screenQuiz);
           loadQuizPage();
         });
       } else {
         quizPageIndex++;
-        transitionScreen(screenChapter, screenQuiz);
+        transitionScreen(null, screenQuiz);
         loadQuizPage();
       }
     };
