@@ -798,19 +798,19 @@ function renderQuestions() {
       <div class="options-row" id="options-row-${q.id}">
         <label class="option-label" data-value="1" data-qid="${q.id}">
           <input type="radio" name="q-${q.id}" value="1">
-          <span>1점</span>
+          <span class="pixel-font">전혀 그렇지 않다</span>
         </label>
         <label class="option-label" data-value="2" data-qid="${q.id}">
           <input type="radio" name="q-${q.id}" value="2">
-          <span>2점</span>
+          <span class="pixel-font">약간 그렇지 않다</span>
         </label>
         <label class="option-label" data-value="3" data-qid="${q.id}">
           <input type="radio" name="q-${q.id}" value="3">
-          <span>3점</span>
+          <span class="pixel-font">약간 그렇다</span>
         </label>
         <label class="option-label" data-value="4" data-qid="${q.id}">
           <input type="radio" name="q-${q.id}" value="4">
-          <span>4점</span>
+          <span class="pixel-font">매우 그렇다</span>
         </label>
       </div>
     `;

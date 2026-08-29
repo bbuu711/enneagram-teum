@@ -179,11 +179,11 @@ body {
 /* 1.5 Chapter Scroll Transition */
 .scroll-container {
   width: 100%;
-  background: #d8c8af;
-  background-image: linear-gradient(to right, #c5a982 0%, #d8c8af 10%, #d8c8af 90%, #c5a982 100%);
-  border: 4px solid #8e6c43;
-  border-radius: 8px;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.8), inset 0 0 30px rgba(100, 70, 40, 0.6);
+  background: #2b1f13;
+  background-image: linear-gradient(to right, #1f140a 0%, #362617 10%, #362617 90%, #1f140a 100%);
+  border: 4px solid #c79a42;
+  border-radius: 4px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.9), inset 0 0 40px rgba(0,0,0,0.8);
   overflow: hidden;
   position: relative;
   cursor: pointer;
@@ -499,10 +499,11 @@ body {
 }
 
 .option-label span {
-  font-size: 18px;
+  font-size: 14px;
   color: #928ea8;
   font-weight: 400;
   transition: color 0.25s ease;
+  word-break: keep-all;
 }
 
 /* Selected option visual highlights */
