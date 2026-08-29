@@ -549,12 +549,12 @@ const newIntroStory = [
 let newStoryIndex = 0;
 
 function startStorySequence() {
-  const introPoster = document.getElementById('intro-poster');
   const screenIntro = document.getElementById('screen-intro');
+  const introText = document.getElementById('intro-text');
   const screenLoading = document.getElementById('screen-loading');
   
-  if(introPoster) {
-    introPoster.addEventListener('click', () => {
+  if(screenIntro) {
+    screenIntro.addEventListener('click', () => {
       sound.playConfirm();
       document.getElementById('loading-text').innerHTML = '틈의 세계로 접속중<span class="dots-anim"></span>';
       transitionScreen(screenIntro, screenLoading);
