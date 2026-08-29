@@ -584,44 +584,56 @@ function startStorySequence() {
   }
 }
 
-function playStorySequence() {
-  const storyText = newIntroStory[newStoryIndex];
+function playCustomStory(storyArray, onComplete) {
+  let currentIndex = 0;
   
-  const clickHandler = () => {
-    storySystemBox.removeEventListener('click', clickHandler);
-    if (isTyping) {
-      skipTyping(storySystemText, storyText, () => {
-        setupStoryNextStep();
-      });
-    } else {
-      sound.playClick();
-      newStoryIndex++;
-      if (newStoryIndex < newIntroStory.length) {
-        playStorySequence();
+  function playStep() {
+    const storyText = storyArray[currentIndex];
+    
+    const clickHandler = () => {
+      storySystemBox.removeEventListener('click', clickHandler);
+      if (isTyping) {
+        skipTyping(storySystemText, storyText, () => {
+          setupNext();
+        });
       } else {
-        transitionToLoading();
+        sound.playClick();
+        currentIndex++;
+        if (currentIndex < storyArray.length) {
+          playStep();
+        } else {
+          if (onComplete) onComplete();
+        }
       }
+    };
+    
+    storySystemBox.addEventListener('click', clickHandler);
+    typeText(storySystemText, storyText, () => {
+      setupNext();
+    });
+    
+    function setupNext() {
+      const innerClickHandler = () => {
+        storySystemBox.removeEventListener('click', innerClickHandler);
+        sound.playClick();
+        currentIndex++;
+        if (currentIndex < storyArray.length) {
+          playStep();
+        } else {
+          if (onComplete) onComplete();
+        }
+      };
+      storySystemBox.addEventListener('click', innerClickHandler);
     }
-  };
+  }
   
-  storySystemBox.addEventListener('click', clickHandler);
-  typeText(storySystemText, storyText, () => {
-    setupStoryNextStep();
-  });
+  playStep();
 }
 
-function setupStoryNextStep() {
-  const innerClickHandler = () => {
-    storySystemBox.removeEventListener('click', innerClickHandler);
-    sound.playClick();
-    newStoryIndex++;
-    if (newStoryIndex < newIntroStory.length) {
-      playStorySequence();
-    } else {
-      transitionToLoading();
-    }
-  };
-  storySystemBox.addEventListener('click', innerClickHandler);
+function playStorySequence() {
+  playCustomStory(newIntroStory, () => {
+    transitionToLoading();
+  });
 }
 
 function transitionToLoading() {
@@ -738,9 +750,23 @@ function loadQuizPage() {
         progressCharacter.classList.remove('walking');
       }, 450);
 
-      quizPageIndex++;
-      transitionScreen(screenChapter, screenQuiz);
-      loadQuizPage();
+      if (quizPageIndex === 0) {
+        // Just finished Chapter 1 screen, show custom story
+        transitionScreen(screenChapter, screenStory);
+        const midStory = [
+          "자, 이제 점점 더 깊은 곳으로\n들어가게 될 거야...",
+          "하지만 너무 서두르진 말자구.\n먼저 네 마음의 '표면'부터 차근차근 알아가보자."
+        ];
+        playCustomStory(midStory, () => {
+          quizPageIndex++;
+          transitionScreen(screenStory, screenQuiz);
+          loadQuizPage();
+        });
+      } else {
+        quizPageIndex++;
+        transitionScreen(screenChapter, screenQuiz);
+        loadQuizPage();
+      }
     };
     
     scrollContainer.addEventListener('click', proceedClick);

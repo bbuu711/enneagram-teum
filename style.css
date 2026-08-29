@@ -179,11 +179,11 @@ body {
 /* 1.5 Chapter Scroll Transition */
 .scroll-container {
   width: 100%;
-  background: #f4e8d3;
-  background-image: linear-gradient(to right, #e8d5b5 0%, #f4e8d3 10%, #f4e8d3 90%, #e8d5b5 100%);
-  border: 4px solid #b58b5a;
+  background: #d8c8af;
+  background-image: linear-gradient(to right, #c5a982 0%, #d8c8af 10%, #d8c8af 90%, #c5a982 100%);
+  border: 4px solid #8e6c43;
   border-radius: 8px;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset 0 0 20px rgba(139, 110, 78, 0.4);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.8), inset 0 0 30px rgba(100, 70, 40, 0.6);
   overflow: hidden;
   position: relative;
   cursor: pointer;
@@ -460,7 +460,8 @@ body {
 }
 
 .question-text {
-  font-size: 22px;
+  font-family: 'NeoDunggeunmo', sans-serif;
+  font-size: 18px;
   line-height: 1.6;
   margin-bottom: 14px;
   color: #e5e2fc;
