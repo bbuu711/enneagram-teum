@@ -230,7 +230,7 @@ body {
 }
 
 .system-tag {
-  font-size: 13px;
+  font-size: 16px;
   color: var(--accent-color);
   letter-spacing: 2px;
   font-weight: 700;
@@ -240,7 +240,7 @@ body {
 
 .system-text {
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: 17px;
+  font-size: 21px;
   line-height: 1.6;
   color: #d1cde8;
   white-space: pre-wrap;
@@ -248,11 +248,28 @@ body {
 }
 
 .next-indicator {
-  font-size: 13px;
+  font-size: 16px;
   color: #7c769b;
   text-align: right;
   margin-top: 10px;
-  animation: blink 1.5s infinite;
+  animation: pulse 2s infinite;
+}
+
+/* Glow Cursor */
+#glow-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(192, 132, 252, 0.4);
+  box-shadow: 0 0 20px 10px rgba(192, 132, 252, 0.5), 0 0 40px 20px rgba(192, 132, 252, 0.3);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  mix-blend-mode: screen;
+  transition: width 0.2s, height 0.2s;
 }
 
 @keyframes blink {

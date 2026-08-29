@@ -495,7 +495,22 @@ document.addEventListener('DOMContentLoaded', () => {
   setupAudioToggle();
   startStorySequence();
   setupFormValidation();
+  setupGlowCursor();
 });
+
+// --- Cursor Setup ---
+function setupGlowCursor() {
+  const cursor = document.getElementById('glow-cursor');
+  if (!cursor) return;
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+  
+  // Optional interactive effects
+  document.addEventListener('mousedown', () => cursor.style.transform = 'translate(-50%, -50%) scale(0.8)');
+  document.addEventListener('mouseup', () => cursor.style.transform = 'translate(-50%, -50%) scale(1)');
+}
 
 // --- Sound setup ---
 function setupAudioToggle() {
