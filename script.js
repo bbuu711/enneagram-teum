@@ -283,7 +283,7 @@ const questionsPerPage = 5;
 quizPages.push({
   isChapter: true,
   title: "Chapter 1",
-  text: "표면의 세계",
+  text: "표면의 세계 (The Surface World)",
   story: [
     "자, 이제 점점 더 깊은 곳으로 들어가는\n여정을 시작해볼까?",
     "첫 번째 목적지는 네 마음의 가장 바깥쪽,\n'표면의 세계'야.",
@@ -311,7 +311,7 @@ for (let i = 0; i < questionsList.length; i += questionsPerPage) {
     quizPages.push({
       isChapter: true,
       title: "Chapter 2",
-      text: "틈새의 기억",
+      text: "틈새의 기억 (Memories of the Rift)",
       story: [
         "표면을 지나 조금 더 깊은 곳,\n'틈새의 기억'에 도착했어.",
         "이곳에서는 네가 평소에 무심코 지나쳤던\n내면의 갈등들이 안개처럼 피어오르지.",
@@ -323,7 +323,7 @@ for (let i = 0; i < questionsList.length; i += questionsPerPage) {
     quizPages.push({
       isChapter: true,
       title: "Chapter 3",
-      text: "심연의 세계",
+      text: "심연의 세계 (The Abyssal World)",
       story: [
         "드디어 마지막 목적지,\n'심연의 세계'의 문 앞에 섰어.",
         "네 마음속 가장 깊은 곳에 웅크리고 있는\n진짜 '틈'의 모양이 보일 거야.",
@@ -573,6 +573,7 @@ function skipTyping(element, text, callback) {
 // --- New Intro Flow ---
 const newIntroStory = [
   "당신은 알 수 없는 소용돌이에 휩쓸려\n낯선 마을에 떨어졌습니다...",
+  "이 낯선 마을의 주민들은 모두 마음속에\n저마다의 '틈'을 안고 살아갑니다.",
   "이 마을에는 모두 각자 '틈'이 하나씩 있고\n이곳에 온 모든 이는 '틈'을 가지게 됩니다.",
   "이제 당신의 내면에\n어떤 틈이 숨겨져 있는지 알아볼 시간입니다."
 ];
@@ -602,44 +603,35 @@ function startStorySequence() {
 function playCustomStory(storyArray, onComplete) {
   let currentIndex = 0;
   
+  // Re-fetch in case it was cloned before
+  let currentBox = document.getElementById('story-system-box');
+  const clone = currentBox.cloneNode(true);
+  currentBox.parentNode.replaceChild(clone, currentBox);
+  
+  const newSystemBox = clone;
+  const newSystemText = newSystemBox.querySelector('.system-text');
+  
   function playStep() {
+    if (currentIndex >= storyArray.length) {
+      if (onComplete) onComplete();
+      return;
+    }
+    
     const storyText = storyArray[currentIndex];
     
     const clickHandler = () => {
-      storySystemBox.removeEventListener('click', clickHandler);
       if (isTyping) {
-        skipTyping(storySystemText, storyText, () => {
-          setupNext();
-        });
+        skipTyping(newSystemText, storyText, () => {});
       } else {
         sound.playClick();
+        newSystemBox.removeEventListener('click', clickHandler);
         currentIndex++;
-        if (currentIndex < storyArray.length) {
-          playStep();
-        } else {
-          if (onComplete) onComplete();
-        }
+        playStep();
       }
     };
     
-    storySystemBox.addEventListener('click', clickHandler);
-    typeText(storySystemText, storyText, () => {
-      setupNext();
-    });
-    
-    function setupNext() {
-      const innerClickHandler = () => {
-        storySystemBox.removeEventListener('click', innerClickHandler);
-        sound.playClick();
-        currentIndex++;
-        if (currentIndex < storyArray.length) {
-          playStep();
-        } else {
-          if (onComplete) onComplete();
-        }
-      };
-      storySystemBox.addEventListener('click', innerClickHandler);
-    }
+    newSystemBox.addEventListener('click', clickHandler);
+    typeText(newSystemText, storyText, () => {});
   }
   
   playStep();
