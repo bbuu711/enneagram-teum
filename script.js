@@ -759,13 +759,19 @@ function loadQuizPage() {
     quizCard.style.display = 'none';
     if (dialogWrapper) dialogWrapper.style.display = 'none';
     
-    // Reset animation by re-adding the element
-    const scrollContainer = document.getElementById('chapter-scroll');
-    scrollContainer.style.animation = 'none';
-    scrollContainer.offsetHeight; // trigger reflow
-    scrollContainer.style.animation = 'unfurlScroll 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards';
+    // 3-second gap before showing chapter banner
+    const screenLoading = document.getElementById('screen-loading');
+    document.getElementById('loading-text').innerHTML = '접속중<span class="dots-anim"></span>';
+    transitionScreen(null, screenLoading);
     
-    transitionScreen(null, screenChapter);
+    const scrollContainer = document.getElementById('chapter-scroll');
+    scrollContainer.style.animation = 'none'; // reset while hidden
+    
+    setTimeout(() => {
+      scrollContainer.offsetHeight; // trigger reflow
+      scrollContainer.style.animation = 'unfurlScroll 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards';
+      transitionScreen(screenLoading, screenChapter);
+    }, 3000);
     
     const proceedClick = () => {
       scrollContainer.removeEventListener('click', proceedClick);
