@@ -729,11 +729,17 @@ function loadQuizPage() {
   btnNextPage.disabled = true;
   btnNextPage.classList.add('btn-disabled');
   
-  // Progress Bar tracking
-  const progressRatio = quizPageIndex / quizPages.length;
+  // Progress Bar tracking (only count question pages)
+  const questionPagesTotal = quizPages.filter(p => !p.isChapter).length;
+  const currentQuestionPageCount = quizPages.slice(0, quizPageIndex).filter(p => !p.isChapter).length;
+  
+  const progressRatio = currentQuestionPageCount / questionPagesTotal;
   const percentage = progressRatio * 100;
   progressBar.style.width = `${percentage}%`;
-  progressText.textContent = `${quizPageIndex + 1} / ${quizPages.length}`;
+  
+  // Display current question page (e.g. 1 / 18), but cap it smoothly
+  progressText.textContent = `${Math.max(1, currentQuestionPageCount + (quizPages[quizPageIndex].isChapter ? 0 : 1))} / ${questionPagesTotal}`;
+  
   progressCharacter.style.left = `${percentage}%`;
   document.documentElement.style.setProperty('--progress-ratio', progressRatio);
 
