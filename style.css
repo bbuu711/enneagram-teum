@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'Distort-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/2607290358@distort-bold/distort-bold/Distort-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}
+
 /* Reset & Base Styles */
 * {
   box-sizing: border-box;
@@ -16,6 +23,10 @@ body {
   align-items: center;
   overflow-x: hidden;
   background: #05030e;
+}
+
+input, button, select, textarea, ::placeholder {
+  font-family: 'NeoDunggeunmo', sans-serif !important;
 }
 
 :root {
@@ -760,5 +771,4 @@ body {
     font-size: 29px;
   }
 }
-b u t t o n ,   i n p u t ,   s e l e c t ,   t e x t a r e a   {   f o n t - f a m i l y :   ' N e o D u n g g e u n m o ' ,   s a n s - s e r i f ;   }  
- 
+b u t t o n ,   i n p u t ,   s e l e c t ,   t e x t a r e a   {   f o n t - f a m i l y :   ' N e o D u n g g e u n m o ' ,   s a n s - s e r i f ;   } 
