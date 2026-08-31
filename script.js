@@ -282,8 +282,13 @@ const questionsPerPage = 5;
 
 quizPages.push({
   isChapter: true,
-  title: "Chapter 1. 표면의 세계",
-  text: "가장 먼저 드러나는 당신의 틈을 들여다봅니다."
+  title: "Chapter 1",
+  text: "표면의 세계",
+  story: [
+    "자, 이제 점점 더 깊은 곳으로 들어가는\n여정을 시작해볼까?",
+    "첫 번째 목적지는 네 마음의 가장 바깥쪽,\n'표면의 세계'야.",
+    "너무 서두르지 말고,\n가벼운 마음으로 발걸음을 떼보자구."
+  ]
 });
 
 let chapterQuestionIndex = 0;
@@ -305,15 +310,25 @@ for (let i = 0; i < questionsList.length; i += questionsPerPage) {
   if (i + questionsPerPage === 30) {
     quizPages.push({
       isChapter: true,
-      title: "Chapter 2. 틈새의 기억",
-      text: "어느덧 깊은 숲 속에 다다랐습니다. 잠시 숨을 고르고, 다시 내면의 소리에 귀 기울여 보세요."
+      title: "Chapter 2",
+      text: "틈새의 기억",
+      story: [
+        "표면을 지나 조금 더 깊은 곳,\n'틈새의 기억'에 도착했어.",
+        "이곳에서는 네가 평소에 무심코 지나쳤던\n내면의 갈등들이 안개처럼 피어오르지.",
+        "우리의 진짜 '틈'이 숨어있는 곳으로 가는\n중요한 길목이야."
+      ]
     });
     chapterQuestionIndex = 0; // Reset numbering
   } else if (i + questionsPerPage === 60) {
     quizPages.push({
       isChapter: true,
-      title: "Chapter 3. 심연의 세계",
-      text: "이제 가장 어두운 심연에 가까워졌습니다. 어떤 모습이 비치더라도 당신의 일부이니 편안히 바라보세요."
+      title: "Chapter 3",
+      text: "심연의 세계",
+      story: [
+        "드디어 마지막 목적지,\n'심연의 세계'의 문 앞에 섰어.",
+        "네 마음속 가장 깊은 곳에 웅크리고 있는\n진짜 '틈'의 모양이 보일 거야.",
+        "망설이지 말고,\n용기를 내서 문을 열어봐."
+      ]
     });
     chapterQuestionIndex = 0; // Reset numbering
   }
@@ -558,7 +573,7 @@ function skipTyping(element, text, callback) {
 // --- New Intro Flow ---
 const newIntroStory = [
   "당신은 알 수 없는 소용돌이에 휩쓸려\n낯선 마을에 떨어졌습니다...",
-  "이 낯선 마을의 주민들은 모두 마음속에\n저마다의 '틈'을 안고 살아갑니다.",
+  "이 마을에는 모두 각자 '틈'이 하나씩 있고\n이곳에 온 모든 이는 '틈'을 가지게 됩니다.",
   "이제 당신의 내면에\n어떤 틈이 숨겨져 있는지 알아볼 시간입니다."
 ];
 let newStoryIndex = 0;
@@ -763,14 +778,9 @@ function loadQuizPage() {
         progressCharacter.classList.remove('walking');
       }, 450);
 
-      if (quizPageIndex === 0) {
-        // Just finished Chapter 1 screen, show custom story
+      if (currentPage.story) {
         transitionScreen(screenChapter, screenStory);
-        const midStory = [
-          "자, 이제 점점 더 깊은 곳으로\n들어가게 될 거야...",
-          "하지만 너무 서두르진 말자구.\n먼저 네 마음의 '표면'부터 차근차근 알아가보자."
-        ];
-        playCustomStory(midStory, () => {
+        playCustomStory(currentPage.story, () => {
           quizPageIndex++;
           transitionScreen(null, screenQuiz);
           loadQuizPage();

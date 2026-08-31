@@ -7,8 +7,8 @@
 }
 
 body {
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 22px; /* Increased base font size */
+  font-family: 'NeoDunggeunmo', sans-serif;
+  font-size: 22px;
   color: #e2e0f0;
   min-height: 100vh;
   display: flex;
@@ -761,3 +761,5 @@ body {
     font-size: 29px;
   }
 }
+b u t t o n ,   i n p u t ,   s e l e c t ,   t e x t a r e a   {   f o n t - f a m i l y :   ' N e o D u n g g e u n m o ' ,   s a n s - s e r i f ;   }  
+ 
