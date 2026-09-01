@@ -944,22 +944,56 @@ function calculateResults() {
   // 5. Render result DOM elements
   const primaryNPC = archetypes[top1];
   
-  const resultImage = document.getElementById('result-image');
-  if (top1 >= 1 && top1 <= 9) {
-    resultBadge.style.display = 'none';
-    resultImage.style.display = 'block';
-    resultImage.src = `assets/type${top1}.jpg`;
-  } else {
-    resultBadge.style.display = 'flex';
-    resultImage.style.display = 'none';
-    resultBadge.textContent = primaryNPC.badge;
-  }
-  
+  // 1. Name & 2. Tagline
+  const resultNpcName = document.getElementById('result-npc-name');
+  const resultTagline = document.getElementById('result-tagline');
   resultNpcName.textContent = primaryNPC.name;
-  resultTagline.textContent = `${primaryNPC.tagline}`;
-  resultDescription.textContent = primaryNPC.description;
-  resultItem.textContent = primaryNPC.item;
-  resultInteraction.textContent = primaryNPC.interaction;
+  resultTagline.textContent = primaryNPC.tagline;
+
+  // 3. Representative Message
+  const resultMessage = document.getElementById('result-message');
+  resultMessage.textContent = `"${primaryNPC.message}"`;
+
+  // 4. Rift Title & Narrative & Features
+  const resultRiftTitle = document.getElementById('result-rift-title');
+  const resultNarrativeBody = document.getElementById('result-narrative-body');
+  const resultFeaturesContent = document.getElementById('result-features-content');
+
+  resultRiftTitle.textContent = primaryNPC.riftTitle;
+
+  // Render narrative paragraphs
+  if (Array.isArray(primaryNPC.narrative)) {
+    resultNarrativeBody.innerHTML = primaryNPC.narrative
+      .map(p => `<p style="margin-bottom: 14px;">${p.replace(/\n/g, '<br>')}</p>`)
+      .join('');
+  } else {
+    resultNarrativeBody.innerHTML = `<p>${primaryNPC.narrative}</p>`;
+  }
+
+  // Render features list
+  if (primaryNPC.features) {
+    const f = primaryNPC.features;
+    let featuresHTML = `<ul style="list-style: none; padding: 0; margin: 0; line-height: 1.7; font-size: 15px;">`;
+    if (f.personality) featuresHTML += `<li style="margin-bottom: 6px;">• <strong>성격:</strong> ${f.personality}</li>`;
+    if (f.likes) featuresHTML += `<li style="margin-bottom: 6px;">• <strong>좋아하는 것:</strong> ${f.likes}</li>`;
+    if (f.characteristics) featuresHTML += `<li style="margin-bottom: 6px;">• <strong>특징:</strong> ${f.characteristics}</li>`;
+    if (f.keywords && f.keywords.length > 0) featuresHTML += `<li style="margin-bottom: 6px;">• <strong>키워드:</strong> ${f.keywords.join(', ')}</li>`;
+    featuresHTML += `</ul>`;
+    resultFeaturesContent.innerHTML = featuresHTML;
+  }
+
+  // 5. Turnaround Sheet Image
+  const resultSheetImage = document.getElementById('result-sheet-image');
+  if (resultSheetImage) {
+    resultSheetImage.src = primaryNPC.image;
+  }
+
+  // 6. 4-Grid Blocks
+  document.getElementById('grid-item-healing').textContent = primaryNPC.healingItem;
+  document.getElementById('color-name').textContent = primaryNPC.color;
+  document.getElementById('color-dot').style.backgroundColor = primaryNPC.colorHex || '#c084fc';
+  document.getElementById('grid-item-good').textContent = primaryNPC.goodMatch;
+  document.getElementById('grid-item-bad').textContent = primaryNPC.badMatch;
 
   // Render 9 Types Radar Chart using Chart.js
   const ctx = document.getElementById('radar-chart');

@@ -135,50 +135,77 @@
     <!-- 3. Result Screen -->
     <div id="screen-result" class="screen">
       <div class="card result-card">
+        
+        <!-- 1. 에니어 유형 이름 & 2. 한 줄 설명 -->
         <div class="result-header">
-          <div class="result-badge" id="result-badge">🔮</div>
-          <img id="result-image" style="display: none; max-width: 240px; height: auto; border-radius: 8px; margin: 0 auto 16px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.5);" alt="Character Portrait">
-          <h2 class="result-title-label">나를 채우고 있는 가장 깊은 틈</h2>
-          <h1 class="result-npc-name" id="result-npc-name">거울 수집가</h1>
-          <p class="result-tagline" id="result-tagline">#에니어그램_4번 #개인주의 #몽상</p>
+          <h1 class="result-npc-name pixel-font" id="result-npc-name">시간을 멈춘 시계공</h1>
+          <p class="result-tagline pixel-font" id="result-tagline">멈춘 시계를 고치며 흐트러진 시간을 바로잡는 시계공입니다.</p>
         </div>
 
-        <div class="result-body">
-          <div class="profile-section">
-            <h4 class="section-title">영혼의 결핍 기록</h4>
-            <p class="result-description" id="result-description">
-              당신은 내면 깊숙이 존재하는 자기만의 방에서 독특함과 낭만을 수집합니다. 
-              남들은 절대 알 수 없을 특별한 우울에 빠져들며, 내가 아닌 다른 이들과 영영 닿지 못할 고독을 수집합니다. 
-              이 틈은 당신을 온전히 바라봐 줄 거울을 영원히 찾아 헤매는 여정을 의미합니다.
-            </p>
+        <!-- 3. 에니어 유형별 대표 메세지 -->
+        <div class="result-quote-box">
+          <p class="quote-text pixel-font" id="result-message">"고쳐야 할 시간이 아직 남아 있어. 멈춘 바늘도, 틀어진 마음도 제자리를 찾아야 하니까."</p>
+        </div>
+
+        <!-- 4. 각 에니어 유형에 대한 서사 & 특징 -->
+        <div class="result-narrative-container">
+          <h3 class="narrative-subtitle pixel-font" id="result-rift-title">잃어버린 틈: ‘괜찮지 않아도 되는 순간’</h3>
+          <div class="narrative-body pixel-font" id="result-narrative-body">
+            <!-- Dynamic narrative paragraphs -->
           </div>
 
-
-          <!-- 9 Types Stats Distribution (Radar Chart) -->
-          <div class="stats-section">
-            <h4 class="section-title">9가지 내면의 '틈' 분포 스탯</h4>
-            <div class="radar-chart-container" style="position: relative; width: 100%; max-width: 400px; margin: 0 auto;">
-              <canvas id="radar-chart"></canvas>
-            </div>
-          </div>
-
-          <div class="meta-section">
-            <div class="meta-box">
-              <span class="meta-label">추천 치유 아이템</span>
-              <span class="meta-value" id="result-item">오래된 오르골</span>
-            </div>
-            <div class="meta-box">
-              <span class="meta-label">내면과의 상호작용</span>
-              <span class="meta-value" id="result-interaction">혼자만의 나지막한 독백</span>
+          <!-- 특징 (Characteristics Box) -->
+          <div class="features-box pixel-font">
+            <h4 class="features-title">✦ 캐릭터 주요 특징</h4>
+            <div id="result-features-content">
+              <!-- Dynamic features -->
             </div>
           </div>
         </div>
 
-        <div class="result-footer">
-          <button class="btn btn-primary submit-btn" id="btn-submit">기록 제출 및 인연 맺기</button>
-          <button class="btn btn-secondary" id="btn-details" style="margin-top: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); color: #ccc;">자세히 보기</button>
-          <button class="btn btn-secondary" id="btn-restart" style="margin-top: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); color: #ccc;">처음으로 돌아가기</button>
+        <!-- 5. 전신 사진 삼면도 & 대표 아이템 -->
+        <div class="result-sheet-container">
+          <h3 class="sheet-title pixel-font">✦ 캐릭터 삼면도 & 대표 아이템 ✦</h3>
+          <div class="sheet-image-wrapper">
+            <img id="result-sheet-image" src="" alt="캐릭터 삼면도 & 아이템 시트">
+          </div>
         </div>
+
+        <!-- 6. 4가지 작은 블록 (2행 2열) -->
+        <div class="result-grid-container">
+          <div class="result-grid-item">
+            <div class="grid-item-label pixel-font">🌿 추천 치유 아이템</div>
+            <div class="grid-item-value pixel-font" id="grid-item-healing">고장 난 회중시계</div>
+          </div>
+          <div class="result-grid-item">
+            <div class="grid-item-label pixel-font">🎨 대표 색깔</div>
+            <div class="grid-item-value pixel-font" id="grid-item-color">
+              <span id="color-dot" class="color-dot"></span> <span id="color-name">빈티지 브라운</span>
+            </div>
+          </div>
+          <div class="result-grid-item match-good">
+            <div class="grid-item-label pixel-font">✨ 환상의 조합</div>
+            <div class="grid-item-value pixel-font" id="grid-item-good">7번 - 웃지 않는 광대</div>
+          </div>
+          <div class="result-grid-item match-bad">
+            <div class="grid-item-label pixel-font">⚡ 환장의 조합</div>
+            <div class="grid-item-value pixel-font" id="grid-item-bad">4번 - 거울 수집가</div>
+          </div>
+        </div>
+
+        <!-- 9 Types Stats Distribution (Radar Chart) -->
+        <div class="stats-section" style="margin-top: 35px;">
+          <h4 class="section-title pixel-font" style="font-size: 18px; color: var(--theme-color); text-align: center; margin-bottom: 16px;">✦ 9가지 내면의 '틈' 분포 ✦</h4>
+          <div class="radar-chart-container" style="position: relative; width: 100%; max-width: 380px; margin: 0 auto;">
+            <canvas id="radar-chart"></canvas>
+          </div>
+        </div>
+
+        <div class="result-footer" style="margin-top: 30px;">
+          <button class="btn btn-secondary pixel-font" id="btn-details" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); color: #ccc;">점수 상세 보기</button>
+          <button class="btn btn-primary submit-btn pixel-font" id="btn-restart" style="margin-top: 12px;">처음으로 돌아가기</button>
+        </div>
+
       </div>
     </div>
 
