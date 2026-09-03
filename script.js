@@ -634,6 +634,12 @@ const archetypes = {
       characteristics: "갑옷 안의 상처는 드러내지 않아요. 누구보다 앞에서 싸웁니다.",
       keywords: ["강인함", "보호", "용기", "신뢰"]
     },
+    representativeItems: [
+      { img: "assets/item_8_1.png", name: "성검", desc: "(정의와 전봉하는 검)" },
+      { img: "assets/item_8_2.png", name: "율법서", desc: "(모든 규율과 법령이 기록된 책)" },
+      { img: "assets/item_8_3.png", name: "강철문 위장", desc: "(규율과 기사단의 상징)" },
+      { img: "assets/item_8_4.png", name: "성수", desc: "(죄악을 정화하고 싸움을 격세팅)" }
+    ],
     image: "assets/type_8.jpg",
     topImage: "assets/char_top_8.jpg",
     sheetImage: "assets/section5_combined_8.jpg",
