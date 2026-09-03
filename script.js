@@ -382,6 +382,12 @@ const archetypes = {
       characteristics: "멈춘 시간을 고치며 잃어버린 순간들을 기억함.",
       keywords: ["추억", "원칙", "수리", "기억", "안내"]
     },
+    representativeItems: [
+      { img: "assets/item_1_1.png", name: "수리 도구 세트", desc: "(드라이버, 핀셋 등)" },
+      { img: "assets/item_1_2.png", name: "회중시계", desc: "(시간 정지 장치)" },
+      { img: "assets/item_1_3.png", name: "확대 루페", desc: "(정밀 작업용)" },
+      { img: "assets/item_1_4.png", name: "공구 상자", desc: "(이동형 작업함)" }
+    ],
     image: "assets/type_1.jpg",
     topImage: "assets/char_top_1.jpg",
     sheetImage: "assets/section5_combined_1.jpg",
@@ -1192,12 +1198,28 @@ function calculateResults() {
   if (sideImg) sideImg.src = `assets/turnaround_side_${top1}.png`;
   if (backImg) backImg.src = `assets/turnaround_back_${top1}.png`;
 
-  // 7. 삼면도 밑 선딴 대표 아이템 이미지 2종
-  const itemImg1 = document.getElementById('item-cutout-img1');
-  const itemImg2 = document.getElementById('item-cutout-img2');
-
-  if (itemImg1) itemImg1.src = `assets/item_${top1}_1.png`;
-  if (itemImg2) itemImg2.src = `assets/item_${top1}_2.png`;
+  // 7. 삼면도 밑 선딴 대표 아이템 렌더링 (동적 아이템 목록 + 설명)
+  const itemsContainer = document.getElementById('items-cutout-container');
+  if (itemsContainer) {
+    itemsContainer.innerHTML = '';
+    const itemsList = primaryNPC.representativeItems || [
+      { img: `assets/item_${top1}_1.png`, name: '대표 아이템 1', desc: '' },
+      { img: `assets/item_${top1}_2.png`, name: '대표 아이템 2', desc: '' }
+    ];
+    
+    itemsList.forEach(item => {
+      const itemEl = document.createElement('div');
+      itemEl.className = 'item-cutout-box';
+      itemEl.innerHTML = `
+        <div class="item-img-wrap">
+          <img src="${item.img}" alt="${item.name}">
+        </div>
+        <div class="item-name pixel-font">${item.name}</div>
+        ${item.desc ? `<div class="item-desc pixel-font">${item.desc}</div>` : ''}
+      `;
+      itemsContainer.appendChild(itemEl);
+    });
+  }
 
   // 8. 4-Grid Blocks
   document.getElementById('grid-item-healing').textContent = primaryNPC.healingItem;
