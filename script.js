@@ -1285,12 +1285,29 @@ function calculateResults() {
   transitionScreen(screenQuiz, screenResult);
 }
 
+// --- Supabase Configuration ---
+// Supabase 프로젝트 연동 (URL 및 Anon Key 설정)
+const SUPABASE_URL = window.SUPABASE_URL || 'https://YOUR_SUPABASE_PROJECT_URL.supabase.co';
+const SUPABASE_ANON_KEY = window.SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY';
+
+let supabaseClient = null;
+function getSupabaseClient() {
+  if (!supabaseClient && window.supabase && SUPABASE_URL && !SUPABASE_URL.includes('YOUR_SUPABASE_PROJECT_URL')) {
+    try {
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    } catch (e) {
+      console.warn('Supabase client initialization error:', e);
+    }
+  }
+  return supabaseClient;
+}
+
 // --- Submit form event (Database 저장) ---
 if (btnSubmit) {
-  btnSubmit.addEventListener('click', () => {
+  btnSubmit.addEventListener('click', async () => {
     sound.playSuccess();
     btnSubmit.disabled = true;
-    btnSubmit.innerHTML = '데이터베이스에 저장 중...';
+    btnSubmit.innerHTML = '제출 중...';
     btnSubmit.style.background = '#4b5563';
     btnSubmit.style.boxShadow = 'none';
 
@@ -1314,7 +1331,40 @@ if (btnSubmit) {
       createdAt: new Date().toISOString()
     };
 
-    // 1. Save to localStorage database
+    // 1. Save to Supabase (if configured)
+    const client = getSupabaseClient();
+    if (client) {
+      try {
+        const { error } = await client
+          .from('enneagram_results')
+          .insert([
+            {
+              name: record.tester.name || '방랑자',
+              age: record.tester.age || null,
+              job: record.tester.job || null,
+              contact: record.tester.contact || null,
+              primary_type_number: record.primaryType ? record.primaryType.number : null,
+              primary_type_name: record.primaryType ? record.primaryType.name : null,
+              top1_name: record.top3[0] ? record.top3[0].name : '',
+              top2_name: record.top3[1] ? record.top3[1].name : '',
+              top3_name: record.top3[2] ? record.top3[2].name : '',
+              type_scores: record.scores,
+              type_percentages: record.percentages,
+              answers: record.answers,
+              created_at: record.createdAt
+            }
+          ]);
+        if (error) {
+          console.error('Supabase insert error:', error);
+        } else {
+          console.log('Successfully saved record to Supabase table [enneagram_results]!');
+        }
+      } catch (err) {
+        console.error('Supabase exception:', err);
+      }
+    }
+
+    // 2. Always save to LocalStorage as well
     try {
       const existingDb = JSON.parse(localStorage.getItem('enneagram_results_db') || '[]');
       existingDb.push(record);
@@ -1323,15 +1373,15 @@ if (btnSubmit) {
       console.error('LocalStorage save error:', err);
     }
 
-    // 2. Simulated DB latency for smooth feedback
+    // 3. UI update to '제출 완료'
     setTimeout(() => {
-      btnSubmit.innerHTML = '✓ 데이터베이스 제출 완료';
+      btnSubmit.innerHTML = '제출 완료';
       btnSubmit.style.background = '#15803d'; // Rich green
       btnSubmit.style.color = '#fff';
       btnSubmit.style.boxShadow = '0 0 15px rgba(34, 197, 94, 0.4)';
       
-      alert(`[기록 보관 완료]\n방랑자 ${record.tester.name}님의 검사 결과가 데이터베이스에 안전하게 저장되었습니다.`);
-    }, 600);
+      alert(`방랑자 ${record.tester.name}님의 검사 결과가 안전하게 제출되었습니다!`);
+    }, 400);
   });
 }
 
