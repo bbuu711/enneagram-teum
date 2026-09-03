@@ -383,6 +383,8 @@ const archetypes = {
       keywords: ["추억", "원칙", "수리", "기억", "안내"]
     },
     image: "assets/type_1.jpg",
+    topImage: "assets/char_top_1.jpg",
+    sheetImage: "assets/section5_combined_1.jpg",
     healingItem: "고장 난 회중시계 & 수리 도구 세트",
     color: "빈티지 브라운 (Vintage Brown)",
     colorHex: "#8e6c43",
@@ -411,6 +413,8 @@ const archetypes = {
       keywords: ["다정함", "섬세함", "외로움", "진심"]
     },
     image: "assets/type_2.jpg",
+    topImage: "assets/char_top_2.jpg",
+    sheetImage: "assets/section5_combined_2.jpg",
     healingItem: "봉인된 하트 편지 & 깃털 날개",
     color: "파스텔 앤틱 로즈 (Antique Rose)",
     colorHex: "#e879f9",
@@ -439,6 +443,8 @@ const archetypes = {
       keywords: ["도전", "인내", "희망", "이동", "여행"]
     },
     image: "assets/type_3.jpg",
+    topImage: "assets/char_top_3.jpg",
+    sheetImage: "assets/section5_combined_3.jpg",
     healingItem: "목표 태그 & 수분 보충용 물통",
     color: "노을 빛 앰버 (Sunset Amber)",
     colorHex: "#f97316",
@@ -467,6 +473,8 @@ const archetypes = {
       keywords: ["냉철", "통찰", "탐구", "자아"]
     },
     image: "assets/type_4.jpg",
+    topImage: "assets/char_top_4.jpg",
+    sheetImage: "assets/section5_combined_4.jpg",
     healingItem: "수집일지 & 거울의 성수",
     color: "심연의 바이올렛 (Abyssal Violet)",
     colorHex: "#8b5cf6",
@@ -496,6 +504,8 @@ const archetypes = {
       keywords: ["과묵", "사색", "관찰", "지혜"]
     },
     image: "assets/type_5.jpg",
+    topImage: "assets/char_top_5.jpg",
+    sheetImage: "assets/section5_combined_5.jpg",
     healingItem: "기록 렌턴 & 지수 저장병",
     color: "미드나잇 다크 인디고 (Dark Indigo)",
     colorHex: "#312e81",
@@ -524,6 +534,8 @@ const archetypes = {
       keywords: ["신중함", "기다림", "징조", "예지", "불확실성"]
     },
     image: "assets/type_6.jpg",
+    topImage: "assets/char_top_6.jpg",
+    sheetImage: "assets/section5_combined_6.jpg",
     healingItem: "별의 지팡이 & 예언서 (스스로를 믿는 나침반)",
     color: "미드나잇 프라페 퍼플 (Midnight Prophet Purple)",
     colorHex: "#1e1b4b",
@@ -552,6 +564,8 @@ const archetypes = {
       keywords: ["열정", "모험", "즐거움", "무대의 어둠"]
     },
     image: "assets/type_7.jpg",
+    topImage: "assets/char_top_7.jpg",
+    sheetImage: "assets/section5_combined_7.jpg",
     healingItem: "오일 렌턴 & 조용한 광대 가면",
     color: "카니발 골드 옐로우 (Carnival Gold Yellow)",
     colorHex: "#eab308",
@@ -579,6 +593,8 @@ const archetypes = {
       keywords: ["강인함", "보호", "용기", "신뢰"]
     },
     image: "assets/type_8.jpg",
+    topImage: "assets/char_top_8.jpg",
+    sheetImage: "assets/section5_combined_8.jpg",
     healingItem: "성검 & 강철의 위장 (갑옷을 내려놓는 신뢰)",
     color: "임페리얼 다크 레드 (Imperial Dark Red)",
     colorHex: "#b91c1c",
@@ -606,6 +622,8 @@ const archetypes = {
       keywords: ["평화", "고요", "자연과의 공존", "소망"]
     },
     image: "assets/type_9.jpg",
+    topImage: "assets/char_top_9.jpg",
+    sheetImage: "assets/section5_combined_9.jpg",
     healingItem: "자연의 잔가지 지팡이 & 성수",
     color: "포레스트 모스 그린 (Forest Moss Green)",
     colorHex: "#059669",
@@ -1121,17 +1139,23 @@ function calculateResults() {
   // 5. Render result DOM elements
   const primaryNPC = archetypes[top1];
   
-  // 1. Name & 2. Tagline
+  // 1. 맨 위 에니어 캐릭터 사진 (파란색 박스에서 글씨 제외된 깨끗한 사진)
+  const resultTopImage = document.getElementById('result-top-image');
+  if (resultTopImage) {
+    resultTopImage.src = primaryNPC.topImage || `assets/char_top_${top1}.jpg`;
+  }
+
+  // 2. Name & 3. Tagline
   const resultNpcName = document.getElementById('result-npc-name');
   const resultTagline = document.getElementById('result-tagline');
   resultNpcName.textContent = primaryNPC.name;
   resultTagline.textContent = primaryNPC.tagline;
 
-  // 3. Representative Message
+  // 4. Representative Message
   const resultMessage = document.getElementById('result-message');
   resultMessage.textContent = `"${primaryNPC.message}"`;
 
-  // 4. Rift Title & Narrative & Features
+  // 5. Rift Title & Narrative & Features
   const resultRiftTitle = document.getElementById('result-rift-title');
   const resultNarrativeBody = document.getElementById('result-narrative-body');
   const resultFeaturesContent = document.getElementById('result-features-content');
@@ -1159,13 +1183,13 @@ function calculateResults() {
     resultFeaturesContent.innerHTML = featuresHTML;
   }
 
-  // 5. Turnaround Sheet Image
+  // 6. Turnaround Sheet Image (Section 5: 핑크색 박스 삼면도 & 대표 아이템)
   const resultSheetImage = document.getElementById('result-sheet-image');
   if (resultSheetImage) {
-    resultSheetImage.src = primaryNPC.image;
+    resultSheetImage.src = primaryNPC.sheetImage || `assets/section5_combined_${top1}.jpg`;
   }
 
-  // 6. 4-Grid Blocks
+  // 7. 4-Grid Blocks
   document.getElementById('grid-item-healing').textContent = primaryNPC.healingItem;
   document.getElementById('color-name').textContent = primaryNPC.color;
   document.getElementById('color-dot').style.backgroundColor = primaryNPC.colorHex || '#c084fc';
