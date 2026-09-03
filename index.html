@@ -9,9 +9,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Noto+Sans+KR:wght@300;400;500;700&family=Dancing+Script:wght@700&family=Nanum+Pen+Script&family=VT323&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/gh/neodgm/neodgm-webfont@latest/neodgm/style.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=20260904_2">
   <style>
+    @font-face {
+      font-family: 'KMU80SungkokSerif';
+      src: url('assets/KMU80SungkokSerif.woff2') format('woff2'),
+           url('https://cdn.jsdelivr.net/gh/Project-Noonnu/2607101542@kmu80sungkokserif/kmu80sungkokserif/KMU80SungkokSerif.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
     .pixel-font { font-family: 'NeoDunggeunmo', 'VT323', monospace; }
+    .quote-font { font-family: 'KMU80SungkokSerif', 'Noto Serif KR', serif !important; }
     .dots-anim::after { content: ''; animation: animDots 1.5s infinite steps(4, end); }
     @keyframes animDots { 0% { content: ''; } 25% { content: '.'; } 50% { content: '..'; } 75% { content: '...'; } 100% { content: ''; } }
   </style>
@@ -149,7 +158,7 @@
 
         <!-- 3. 에니어 유형별 대표 메세지 -->
         <div class="result-quote-box">
-          <p class="quote-text pixel-font" id="result-message">"고쳐야 할 시간이 아직 남아 있어. 멈춘 바늘도, 틀어진 마음도 제자리를 찾아야 하니까."</p>
+          <p class="quote-text quote-font" id="result-message">"고쳐야 할 시간이 아직 남아 있어. 멈춘 바늘도, 틀어진 마음도 제자리를 찾아야 하니까."</p>
         </div>
 
         <!-- 4. 각 에니어 유형에 대한 서사 & 특징 -->
@@ -254,6 +263,6 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="script.js?v=3.0"></script>
+  <script src="script.js?v=20260904_2"></script>
 </body>
 </html>
