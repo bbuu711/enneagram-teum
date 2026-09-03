@@ -490,6 +490,12 @@ const archetypes = {
       characteristics: "거울 틈의 세계에서 사라진 조각들을 수집해요.",
       keywords: ["냉철", "통찰", "탐구", "자아"]
     },
+    representativeItems: [
+      { img: "assets/item_4_1.png", name: "성검", desc: "(진실을 꿰뚫는 검)" },
+      { img: "assets/item_4_2.png", name: "올빼미", desc: "(모든 지혜와 연결된 기록책)" },
+      { img: "assets/item_4_3.png", name: "휘장", desc: "(겨울 수호가의 상징)" },
+      { img: "assets/item_4_4.png", name: "성수", desc: "(겨울 세계의 정수)" }
+    ],
     image: "assets/type_4.jpg",
     topImage: "assets/char_top_4.jpg",
     sheetImage: "assets/section5_combined_4.jpg",
