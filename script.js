@@ -527,6 +527,12 @@ const archetypes = {
       characteristics: "잊힌 기억을 수집하고 작은 저장병에 보관한다. 조용하고 말수가 적다.",
       keywords: ["과묵", "사색", "관찰", "지혜"]
     },
+    representativeItems: [
+      { img: "assets/item_5_1.png", name: "기록봉", desc: "(지혜의 형태의 기록 도구)" },
+      { img: "assets/item_5_2.png", name: "지도책", desc: "(여행과 기록을 위한 필수품)" },
+      { img: "assets/item_5_3.png", name: "저장병", desc: "(기억을 담는 유리 병)" },
+      { img: "assets/item_5_4.png", name: "랜턴", desc: "(기억의 잔상을 비추는 빛)" }
+    ],
     image: "assets/type_5.jpg",
     topImage: "assets/char_top_5.jpg",
     sheetImage: "assets/section5_combined_5.jpg",
