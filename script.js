@@ -1311,10 +1311,31 @@ if (btnSubmit) {
     btnSubmit.style.background = '#4b5563';
     btnSubmit.style.boxShadow = 'none';
 
+    // Extract last 4 digits of contact number
+    const contactRaw = (testerInfo && testerInfo.contact) ? String(testerInfo.contact) : '';
+    const cleanDigits = contactRaw.replace(/\D/g, '');
+    const contactLast4 = cleanDigits.length >= 4 ? cleanDigits.slice(-4) : cleanDigits;
+
+    // Calculate Wing (날개)
+    const primaryNum = finalSortedTypes[0] ? finalSortedTypes[0].type : 1;
+    const leftWingNum = primaryNum === 1 ? 9 : primaryNum - 1;
+    const rightWingNum = primaryNum === 9 ? 1 : primaryNum + 1;
+    const leftWingScore = finalTypeScores[leftWingNum] || 0;
+    const rightWingScore = finalTypeScores[rightWingNum] || 0;
+    const dominantWingNum = leftWingScore >= rightWingScore ? leftWingNum : rightWingNum;
+    const wingCode = `${primaryNum}w${dominantWingNum}`;
+
+    // Calculate 3 Triad Core Energies
+    const heartScore = (finalTypeScores[2] || 0) + (finalTypeScores[3] || 0) + (finalTypeScores[4] || 0);
+    const headScore = (finalTypeScores[5] || 0) + (finalTypeScores[6] || 0) + (finalTypeScores[7] || 0);
+    const gutScore = (finalTypeScores[8] || 0) + (finalTypeScores[9] || 0) + (finalTypeScores[1] || 0);
+    const totalTriadScore = heartScore + headScore + gutScore || 1;
+
     // Build result record payload
     const record = {
       id: 'result_' + Date.now(),
       tester: testerInfo || { name: '방랑자', age: '', job: '', contact: '' },
+      contactLast4: contactLast4,
       primaryType: finalSortedTypes[0] ? {
         number: finalSortedTypes[0].type,
         name: archetypes[finalSortedTypes[0].type].name
@@ -1325,10 +1346,25 @@ if (btnSubmit) {
         score: finalTypeScores[item.type],
         percentage: finalPercentages[item.type]
       })),
+      wing: {
+        code: wingCode,
+        primaryNum: primaryNum,
+        dominantWingNum: dominantWingNum,
+        leftWingNum: leftWingNum,
+        leftWingScore: leftWingScore,
+        rightWingNum: rightWingNum,
+        rightWingScore: rightWingScore
+      },
+      triads: {
+        heart: { score: heartScore, percentage: Math.round((heartScore / totalTriadScore) * 100), label: '가슴(감정) 중심 (2,3,4번)' },
+        head: { score: headScore, percentage: Math.round((headScore / totalTriadScore) * 100), label: '머리(사고) 중심 (5,6,7번)' },
+        gut: { score: gutScore, percentage: Math.round((gutScore / totalTriadScore) * 100), label: '장(본능) 중심 (8,9,1번)' }
+      },
       scores: finalTypeScores,
       percentages: finalPercentages,
       answers: answers,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      submittedAtFormatted: new Date().toLocaleString('ko-KR')
     };
 
     // 1. Save to Supabase (if configured)
