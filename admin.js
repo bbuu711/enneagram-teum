@@ -1,14 +1,14 @@
 // --- Archetypes Metadata ---
 const archetypesMeta = {
-  1: { number: 1, name: "시간을 멈춘 시계공", img: "assets/char_top_clean_1.jpg", color: "#8e6c43", keywords: ["원칙", "수리", "기억", "질서"] },
-  2: { number: 2, name: "화살 잃은 큐피드", img: "assets/char_top_clean_2.jpg", color: "#e879f9", keywords: ["다정함", "섬세함", "외로움", "진심"] },
-  3: { number: 3, name: "끝없이 달리는 소녀", img: "assets/char_top_clean_3.jpg", color: "#f97316", keywords: ["도전", "인내", "희망", "성취"] },
-  4: { number: 4, name: "거울 수집가", img: "assets/char_top_clean_4.jpg", color: "#8b5cf6", keywords: ["개성", "통찰", "탐구", "자아"] },
-  5: { number: 5, name: "세상을 저장하는 방랑자", img: "assets/char_top_clean_5.jpg", color: "#312e81", keywords: ["과묵", "사색", "관찰", "지혜"] },
-  6: { number: 6, name: "답을 기다리는 예언자", img: "assets/char_top_clean_6.jpg", color: "#1e1b4b", keywords: ["신중함", "기다림", "징조", "신뢰"] },
-  7: { number: 7, name: "웃지 않는 광대", img: "assets/char_top_clean_7.jpg", color: "#eab308", keywords: ["열정", "모험", "즐거움", "위로"] },
-  8: { number: 8, name: "갑옷을 벗지 않는 기사", img: "assets/char_top_clean_8.jpg", color: "#b91c1c", keywords: ["강인함", "보호", "용기", "신념"] },
-  9: { number: 9, name: "잠든 거인", img: "assets/char_top_clean_9.jpg", color: "#059669", keywords: ["평화", "고요", "조화", "소망"] }
+  1: { number: 1, name: "시간을 멈춘 시계공", center: "장(본능) 중심", img: "assets/char_top_clean_1.jpg", color: "#8e6c43", keywords: ["원칙", "수리", "기억", "질서"] },
+  2: { number: 2, name: "화살 잃은 큐피드", center: "가슴(감정) 중심", img: "assets/char_top_clean_2.jpg", color: "#e879f9", keywords: ["다정함", "섬세함", "외로움", "진심"] },
+  3: { number: 3, name: "끝없이 달리는 소녀", center: "가슴(감정) 중심", img: "assets/char_top_clean_3.jpg", color: "#f97316", keywords: ["도전", "인내", "희망", "성취"] },
+  4: { number: 4, name: "거울 수집가", center: "가슴(감정) 중심", img: "assets/char_top_clean_4.jpg", color: "#8b5cf6", keywords: ["개성", "통찰", "탐구", "자아"] },
+  5: { number: 5, name: "세상을 저장하는 방랑자", center: "머리(사고) 중심", img: "assets/char_top_clean_5.jpg", color: "#312e81", keywords: ["과묵", "사색", "관찰", "지혜"] },
+  6: { number: 6, name: "답을 기다리는 예언자", center: "머리(사고) 중심", img: "assets/char_top_clean_6.jpg", color: "#1e1b4b", keywords: ["신중함", "기다림", "징조", "신뢰"] },
+  7: { number: 7, name: "웃지 않는 광대", center: "머리(사고) 중심", img: "assets/char_top_clean_7.jpg", color: "#eab308", keywords: ["열정", "모험", "즐거움", "위로"] },
+  8: { number: 8, name: "갑옷을 벗지 않는 기사", center: "장(본능) 중심", img: "assets/char_top_clean_8.jpg", color: "#b91c1c", keywords: ["강인함", "보호", "용기", "신념"] },
+  9: { number: 9, name: "잠든 거인", center: "장(본능) 중심", img: "assets/char_top_clean_9.jpg", color: "#059669", keywords: ["평화", "고요", "조화", "소망"] }
 };
 
 // --- Wing Descriptions Dictionary ---
@@ -145,7 +145,6 @@ function handleSearch() {
   const filtered = records.filter(r => {
     const nameMatch = queryName ? (r.tester && r.tester.name && r.tester.name.includes(queryName)) : true;
     
-    // Check contact last 4 digits
     let contactDigits = '';
     if (r.contactLast4) {
       contactDigits = r.contactLast4;
@@ -199,25 +198,28 @@ function renderParticipantsTable(recordsToRender = null) {
     return;
   }
 
-  records.slice().reverse().forEach((record, idx) => {
+  records.slice().reverse().forEach((record) => {
     const tr = document.createElement('tr');
     const dateStr = record.submittedAtFormatted || (record.createdAt ? new Date(record.createdAt).toLocaleDateString('ko-KR') : '-');
     const name = (record.tester && record.tester.name) || '익명 방랑자';
     
-    // Contact formatted
     const contactRaw = (record.tester && record.tester.contact) || '';
     const last4 = record.contactLast4 || (contactRaw.replace(/\D/g, '').slice(-4)) || '----';
     const contactDisplay = contactRaw ? `${contactRaw} (끝: ${last4})` : `(끝: ${last4})`;
 
-    // Primary type
     const pTypeNum = record.primaryType ? record.primaryType.number : (record.top3 && record.top3[0] ? record.top3[0].type : 1);
     const pTypeName = archetypesMeta[pTypeNum] ? archetypesMeta[pTypeNum].name : '시계공';
-
-    // Wing code
     const wingCode = record.wing ? record.wing.code : `${pTypeNum}w${pTypeNum === 1 ? 9 : pTypeNum - 1}`;
 
-    // Top 3 String
-    const top3Str = (record.top3 || []).map(t => `${t.type}번`).join(' > ');
+    // Compact 1~9 scores summary chips
+    const scores = record.scores || {};
+    let scoresChipsHTML = '<div class="table-scores-summary">';
+    for (let i = 1; i <= 9; i++) {
+      const isTop = (i === pTypeNum);
+      const val = scores[i] !== undefined ? scores[i] : '-';
+      scoresChipsHTML += `<span class="score-chip ${isTop ? 'top' : ''}">${i}번:${val}점</span>`;
+    }
+    scoresChipsHTML += '</div>';
 
     tr.innerHTML = `
       <td style="color: #94a3b8;">${dateStr}</td>
@@ -225,9 +227,9 @@ function renderParticipantsTable(recordsToRender = null) {
       <td>${contactDisplay}</td>
       <td><span class="badge badge-gold">${pTypeNum}번. ${pTypeName}</span></td>
       <td><span class="badge badge-purple">${wingCode}</span></td>
-      <td style="color: #cbd5e1;">${top3Str}</td>
+      <td>${scoresChipsHTML}</td>
       <td>
-        <button class="btn btn-secondary btn-view-report" data-idx="${record.id}" style="font-size: 12px; padding: 4px 10px;">상세 분석</button>
+        <button class="btn btn-secondary btn-view-report" style="font-size: 12px; padding: 4px 10px;">상세 분석</button>
       </td>
     `;
 
@@ -281,11 +283,58 @@ function displayDetailedReport(record) {
     top3Container.appendChild(card);
   });
 
-  // 3. Wing (날개) Analysis
+  // 3. 1~9 All Types Detailed Score Grid & Table (NEW)
+  const allScoresContainer = document.getElementById('all-scores-container');
+  allScoresContainer.innerHTML = '';
+  const scores = record.scores || {};
+  const percentages = record.percentages || {};
+
+  // Sort scores to determine rank for each of 1..9
+  const scoreEntries = [];
+  for (let i = 1; i <= 9; i++) {
+    scoreEntries.push({ type: i, score: scores[i] || 0 });
+  }
+  scoreEntries.sort((a, b) => b.score - a.score);
+  const rankMap = {};
+  scoreEntries.forEach((entry, idx) => {
+    rankMap[entry.type] = idx + 1;
+  });
+
+  for (let i = 1; i <= 9; i++) {
+    const meta = archetypesMeta[i];
+    const scoreVal = scores[i] !== undefined ? scores[i] : 0;
+    const pctVal = percentages[i] !== undefined ? percentages[i] : Math.round((scoreVal / 40) * 100);
+    const rank = rankMap[i];
+    const isDominant = (i === primaryNum);
+
+    let rankBadgeText = `${rank}순위`;
+    if (rank === 1) rankBadgeText = '🥇 1순위 (주유형)';
+    else if (rank === 2) rankBadgeText = '🥈 2순위';
+    else if (rank === 3) rankBadgeText = '🥉 3순위';
+
+    const card = document.createElement('div');
+    card.className = `score-card ${isDominant ? 'dominant' : ''}`;
+    card.innerHTML = `
+      <div class="score-card-header">
+        <span class="score-card-type-name pixel-font">${i}번. ${meta.name}</span>
+        <span class="score-card-rank-badge pixel-font">${rankBadgeText}</span>
+      </div>
+      <div style="font-size: 12px; color: ${meta.color};" class="pixel-font">${meta.center}</div>
+      <div class="score-card-body">
+        <span class="score-card-main-score pixel-font">${scoreVal}점</span>
+        <span class="score-card-pct pixel-font">백분위 ${pctVal}%</span>
+      </div>
+      <div class="score-card-bar-track">
+        <div class="score-card-bar-fill" style="width: ${pctVal}%; background: ${meta.color};"></div>
+      </div>
+    `;
+    allScoresContainer.appendChild(card);
+  }
+
+  // 4. Wing (날개) Analysis
   const wingContainer = document.getElementById('wing-container');
   let wing = record.wing;
   if (!wing) {
-    // Calculate fallback wing
     const leftNum = primaryNum === 1 ? 9 : primaryNum - 1;
     const rightNum = primaryNum === 9 ? 1 : primaryNum + 1;
     const leftScore = (record.scores && record.scores[leftNum]) || 0;
@@ -307,9 +356,6 @@ function displayDetailedReport(record) {
     desc: "주유형의 잠재력과 이웃한 날개 유형의 에너지가 결합하여 고유한 성향을 이룹니다."
   };
 
-  const leftMeta = archetypesMeta[wing.leftWingNum];
-  const rightMeta = archetypesMeta[wing.rightWingNum];
-
   wingContainer.innerHTML = `
     <div class="wing-header">
       <div class="wing-code-badge pixel-font">🪽 판별된 날개: ${wing.code} [${wingInfo.title}]</div>
@@ -320,9 +366,8 @@ function displayDetailedReport(record) {
     <p class="wing-desc pixel-font">${wingInfo.desc}</p>
   `;
 
-  // 4. Triad 3 Core Energies (가슴 2,3,4 / 머리 5,6,7 / 장 8,9,1)
+  // 5. Triad 3 Core Energies
   const triadContainer = document.getElementById('triad-container');
-  const scores = record.scores || {};
   const heartScore = (scores[2] || 0) + (scores[3] || 0) + (scores[4] || 0);
   const headScore = (scores[5] || 0) + (scores[6] || 0) + (scores[7] || 0);
   const gutScore = (scores[8] || 0) + (scores[9] || 0) + (scores[1] || 0);
@@ -333,7 +378,6 @@ function displayDetailedReport(record) {
   const gutPct = Math.round((gutScore / totalTriad) * 100);
 
   triadContainer.innerHTML = `
-    <!-- Heart Center -->
     <div class="triad-card heart">
       <div class="triad-card-title pixel-font">
         <span>💖 가슴(감정) 중심</span>
@@ -346,7 +390,6 @@ function displayDetailedReport(record) {
       <div class="triad-detail-text pixel-font">관계, 타인의 인정, 감정적 연결과 수치심 조절을 동기로 행동합니다.</div>
     </div>
 
-    <!-- Head Center -->
     <div class="triad-card head">
       <div class="triad-card-title pixel-font">
         <span>🧠 머리(사고) 중심</span>
@@ -359,7 +402,6 @@ function displayDetailedReport(record) {
       <div class="triad-detail-text pixel-font">지적 탐구, 미래의 안전과 예측, 불안을 줄이기 위한 전략을 추구합니다.</div>
     </div>
 
-    <!-- Gut Center -->
     <div class="triad-card gut">
       <div class="triad-card-title pixel-font">
         <span>🛡️ 장(본능) 중심</span>
@@ -373,12 +415,12 @@ function displayDetailedReport(record) {
     </div>
   `;
 
-  // 5. Render Charts
-  renderCharts(scores, { heart: heartScore, head: headScore, gut: gutScore });
+  // 6. Render Charts
+  renderCharts(scores);
 }
 
 // --- Chart.js Rendering ---
-function renderCharts(scores, triads) {
+function renderCharts(scores) {
   const labels = [
     '1번 시계공', '2번 큐피드', '3번 달리는소녀',
     '4번 거울수집가', '5번 방랑자', '6번 예언자',
@@ -444,7 +486,7 @@ function renderCharts(scores, triads) {
   const radarCanvas = document.getElementById('triadRadarChart');
   if (radarChartInstance) radarChartInstance.destroy();
 
-  radarChartInstance = new Chart(radarCanvas, {
+  radarCanvas = new Chart(radarCanvas, {
     type: 'radar',
     data: {
       labels: ['1.시계공', '2.큐피드', '3.소녀', '4.거울', '5.방랑자', '6.예언자', '7.광대', '8.기사', '9.거인'],
