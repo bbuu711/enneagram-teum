@@ -1157,10 +1157,12 @@ input, button, select, textarea, ::placeholder {
 
 .items-cutout-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 16px;
   justify-content: center;
   align-items: flex-start;
+  max-width: 520px;
+  margin: 0 auto;
 }
 
 .item-cutout-box {

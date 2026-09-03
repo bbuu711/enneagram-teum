@@ -394,8 +394,8 @@ const archetypes = {
     healingItem: "고장 난 회중시계 & 수리 도구 세트",
     color: "빈티지 브라운 (Vintage Brown)",
     colorHex: "#8e6c43",
-    goodMatch: "7번 - 웃지 않는 광대",
-    badMatch: "4번 - 거울 수집가"
+    goodMatch: "웃지 않는 광대",
+    badMatch: "거울 수집가"
   },
   2: {
     number: 2,
@@ -430,8 +430,8 @@ const archetypes = {
     healingItem: "봉인된 하트 편지 & 깃털 날개",
     color: "파스텔 앤틱 로즈 (Antique Rose)",
     colorHex: "#e879f9",
-    goodMatch: "8번 - 갑옷을 벗지 않는 기사",
-    badMatch: "5번 - 세상을 저장하는 방랑자"
+    goodMatch: "갑옷을 벗지 않는 기사",
+    badMatch: "세상을 저장하는 방랑자"
   },
   3: {
     number: 3,
@@ -466,8 +466,8 @@ const archetypes = {
     healingItem: "목표 태그 & 수분 보충용 물통",
     color: "노을 빛 앰버 (Sunset Amber)",
     colorHex: "#f97316",
-    goodMatch: "6번 - 답을 기다리는 예언자",
-    badMatch: "9번 - 잠든 거인"
+    goodMatch: "답을 기다리는 예언자",
+    badMatch: "잠든 거인"
   },
   4: {
     number: 4,
@@ -502,8 +502,8 @@ const archetypes = {
     healingItem: "수집일지 & 거울의 성수",
     color: "심연의 바이올렛 (Abyssal Violet)",
     colorHex: "#8b5cf6",
-    goodMatch: "1번 - 시간을 멈춘 시계공",
-    badMatch: "2번 - 화살 잃은 큐피드"
+    goodMatch: "시간을 멈춘 시계공",
+    badMatch: "화살 잃은 큐피드"
   },
   5: {
     number: 5,
@@ -539,8 +539,8 @@ const archetypes = {
     healingItem: "기록 렌턴 & 지수 저장병",
     color: "미드나잇 다크 인디고 (Dark Indigo)",
     colorHex: "#312e81",
-    goodMatch: "8번 - 갑옷을 벗지 않는 기사",
-    badMatch: "2번 - 화살 잃은 큐피드"
+    goodMatch: "갑옷을 벗지 않는 기사",
+    badMatch: "화살 잃은 큐피드"
   },
   6: {
     number: 6,
@@ -575,8 +575,8 @@ const archetypes = {
     healingItem: "별의 지팡이 & 예언서 (스스로를 믿는 나침반)",
     color: "미드나잇 프라페 퍼플 (Midnight Prophet Purple)",
     colorHex: "#1e1b4b",
-    goodMatch: "3번 - 끝없이 달리는 소녀",
-    badMatch: "7번 - 웃지 않는 광대"
+    goodMatch: "끝없이 달리는 소녀",
+    badMatch: "웃지 않는 광대"
   },
   7: {
     number: 7,
@@ -611,8 +611,8 @@ const archetypes = {
     healingItem: "오일 렌턴 & 조용한 광대 가면",
     color: "카니발 골드 옐로우 (Carnival Gold Yellow)",
     colorHex: "#eab308",
-    goodMatch: "1번 - 시간을 멈춘 시계공",
-    badMatch: "6번 - 답을 기다리는 예언자"
+    goodMatch: "시간을 멈춘 시계공",
+    badMatch: "답을 기다리는 예언자"
   },
   8: {
     number: 8,
@@ -646,8 +646,8 @@ const archetypes = {
     healingItem: "성검 & 강철의 위장 (갑옷을 내려놓는 신뢰)",
     color: "임페리얼 다크 레드 (Imperial Dark Red)",
     colorHex: "#b91c1c",
-    goodMatch: "2번 - 화살 잃은 큐피드",
-    badMatch: "5번 - 세상을 저장하는 방랑자"
+    goodMatch: "화살 잃은 큐피드",
+    badMatch: "세상을 저장하는 방랑자"
   },
   9: {
     number: 9,
@@ -681,8 +681,8 @@ const archetypes = {
     healingItem: "자연의 잔가지 지팡이 & 성수",
     color: "포레스트 모스 그린 (Forest Moss Green)",
     colorHex: "#059669",
-    goodMatch: "9번 - 잠든 거인",
-    badMatch: "3번 - 끝없이 달리는 소녀"
+    goodMatch: "잠든 거인",
+    badMatch: "끝없이 달리는 소녀"
   }
 };
 
@@ -1273,8 +1273,8 @@ function calculateResults() {
   document.getElementById('grid-item-healing').textContent = primaryNPC.healingItem;
   document.getElementById('color-name').textContent = primaryNPC.color;
   document.getElementById('color-dot').style.backgroundColor = primaryNPC.colorHex || '#c084fc';
-  document.getElementById('grid-item-good').textContent = primaryNPC.goodMatch;
-  document.getElementById('grid-item-bad').textContent = primaryNPC.badMatch;
+  document.getElementById('grid-item-good').textContent = (primaryNPC.goodMatch || '').replace(/^\d+번\s*-\s*/, '');
+  document.getElementById('grid-item-bad').textContent = (primaryNPC.badMatch || '').replace(/^\d+번\s*-\s*/, '');
 
   // Move Character and Bar to 100%
   progressBar.style.width = '100%';
