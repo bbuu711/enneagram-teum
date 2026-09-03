@@ -168,11 +168,47 @@
           </div>
         </div>
 
-        <!-- 5. 전신 사진 삼면도 & 대표 아이템 -->
+        <!-- 5. 전신 사진 삼면도 (핑크색 박스 선딴 정면, 측면, 후면) & 대표 아이템 -->
         <div class="result-sheet-container">
-          <h3 class="sheet-title pixel-font">✦ 캐릭터 삼면도 & 대표 아이템 ✦</h3>
-          <div class="sheet-image-wrapper">
-            <img id="result-sheet-image" src="" alt="캐릭터 삼면도 & 아이템 시트">
+          <h3 class="sheet-title pixel-font">✦ 캐릭터 삼면도 ✦</h3>
+          
+          <!-- 삼면도 3종 (정면, 측면, 후면) -->
+          <div class="turnaround-grid">
+            <div class="turnaround-box">
+              <div class="turnaround-img-wrap">
+                <img id="turnaround-front-img" src="" alt="정면">
+              </div>
+              <span class="turnaround-label pixel-font">정면</span>
+            </div>
+            <div class="turnaround-box">
+              <div class="turnaround-img-wrap">
+                <img id="turnaround-side-img" src="" alt="측면">
+              </div>
+              <span class="turnaround-label pixel-font">측면</span>
+            </div>
+            <div class="turnaround-box">
+              <div class="turnaround-img-wrap">
+                <img id="turnaround-back-img" src="" alt="후면">
+              </div>
+              <span class="turnaround-label pixel-font">후면</span>
+            </div>
+          </div>
+
+          <!-- 삼면도 밑 대표 아이템 (선딴 대표 아이템) -->
+          <div class="items-cutout-section" style="margin-top: 24px;">
+            <h4 class="items-cutout-title pixel-font">✦ 대표 아이템 ✦</h4>
+            <div class="items-cutout-grid">
+              <div class="item-cutout-box">
+                <div class="item-img-wrap">
+                  <img id="item-cutout-img1" src="" alt="대표 아이템 1">
+                </div>
+              </div>
+              <div class="item-cutout-box">
+                <div class="item-img-wrap">
+                  <img id="item-cutout-img2" src="" alt="대표 아이템 2">
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -195,14 +231,6 @@
           <div class="result-grid-item match-bad">
             <div class="grid-item-label pixel-font">⚡ 환장의 조합</div>
             <div class="grid-item-value pixel-font" id="grid-item-bad">4번 - 거울 수집가</div>
-          </div>
-        </div>
-
-        <!-- 9 Types Stats Distribution (Radar Chart) -->
-        <div class="stats-section" style="margin-top: 35px;">
-          <h4 class="section-title pixel-font" style="font-size: 18px; color: var(--theme-color); text-align: center; margin-bottom: 16px;">✦ 9가지 내면의 '틈' 분포 ✦</h4>
-          <div class="radar-chart-container" style="position: relative; width: 100%; max-width: 380px; margin: 0 auto;">
-            <canvas id="radar-chart"></canvas>
           </div>
         </div>
 

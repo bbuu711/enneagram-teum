@@ -1142,7 +1142,7 @@ function calculateResults() {
   // 1. 맨 위 에니어 캐릭터 사진 (파란색 박스에서 글씨 제외된 깨끗한 사진)
   const resultTopImage = document.getElementById('result-top-image');
   if (resultTopImage) {
-    resultTopImage.src = primaryNPC.topImage || `assets/char_top_${top1}.jpg`;
+    resultTopImage.src = `assets/char_top_clean_${top1}.jpg`;
   }
 
   // 2. Name & 3. Tagline
@@ -1183,74 +1183,28 @@ function calculateResults() {
     resultFeaturesContent.innerHTML = featuresHTML;
   }
 
-  // 6. Turnaround Sheet Image (Section 5: 핑크색 박스 삼면도 & 대표 아이템)
-  const resultSheetImage = document.getElementById('result-sheet-image');
-  if (resultSheetImage) {
-    resultSheetImage.src = primaryNPC.sheetImage || `assets/section5_combined_${top1}.jpg`;
-  }
+  // 6. 삼면도 선딴 cutout 이미지 3종 (정면, 측면, 후면)
+  const frontImg = document.getElementById('turnaround-front-img');
+  const sideImg = document.getElementById('turnaround-side-img');
+  const backImg = document.getElementById('turnaround-back-img');
+  
+  if (frontImg) frontImg.src = `assets/turnaround_front_${top1}.png`;
+  if (sideImg) sideImg.src = `assets/turnaround_side_${top1}.png`;
+  if (backImg) backImg.src = `assets/turnaround_back_${top1}.png`;
 
-  // 7. 4-Grid Blocks
+  // 7. 삼면도 밑 선딴 대표 아이템 이미지 2종
+  const itemImg1 = document.getElementById('item-cutout-img1');
+  const itemImg2 = document.getElementById('item-cutout-img2');
+
+  if (itemImg1) itemImg1.src = `assets/item_${top1}_1.png`;
+  if (itemImg2) itemImg2.src = `assets/item_${top1}_2.png`;
+
+  // 8. 4-Grid Blocks
   document.getElementById('grid-item-healing').textContent = primaryNPC.healingItem;
   document.getElementById('color-name').textContent = primaryNPC.color;
   document.getElementById('color-dot').style.backgroundColor = primaryNPC.colorHex || '#c084fc';
   document.getElementById('grid-item-good').textContent = primaryNPC.goodMatch;
   document.getElementById('grid-item-bad').textContent = primaryNPC.badMatch;
-
-  // Render 9 Types Radar Chart using Chart.js
-  const ctx = document.getElementById('radar-chart');
-  if (ctx) {
-    const labels = [];
-    const dataPoints = [];
-    
-    for (let t = 1; t <= 9; t++) {
-      labels.push(`${t}번`);
-      dataPoints.push(percentages[t]);
-    }
-    
-    if (window.radarChartInstance) {
-      window.radarChartInstance.destroy();
-    }
-    
-    window.radarChartInstance = new Chart(ctx, {
-      type: 'radar',
-      data: {
-        labels: labels,
-        datasets: [{
-          label: '내면의 틈',
-          data: dataPoints,
-          backgroundColor: 'rgba(196, 161, 255, 0.2)',
-          borderColor: 'rgba(196, 161, 255, 0.8)',
-          pointBackgroundColor: 'rgba(196, 161, 255, 1)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgba(196, 161, 255, 1)',
-          borderWidth: 2
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: true,
-        scales: {
-          r: {
-            angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
-            grid: { color: 'rgba(255, 255, 255, 0.1)' },
-            pointLabels: {
-              color: 'rgba(255, 255, 255, 0.8)',
-              font: { size: 12, family: "'Noto Sans KR', sans-serif" }
-            },
-            ticks: {
-              display: false,
-              min: 0,
-              max: 100
-            }
-          }
-        },
-        plugins: {
-          legend: { display: false }
-        }
-      }
-    });
-  }
 
   // Move Character and Bar to 100%
   progressBar.style.width = '100%';
