@@ -563,6 +563,12 @@ const archetypes = {
       characteristics: "답을 주는 표식을 기다리며, 미래의 위험을 먼저 살펴봅니다.",
       keywords: ["신중함", "기다림", "징조", "예지", "불확실성"]
     },
+    representativeItems: [
+      { img: "assets/item_6_1.png", name: "약속의 봉", desc: "(인연과 약속을 이어주는 신비한 봉)" },
+      { img: "assets/item_6_2.png", name: "예언서", desc: "(별과 창조의 기록)" },
+      { img: "assets/item_6_3.png", name: "점성구", desc: "(별빛을 비추는 구)" },
+      { img: "assets/item_6_4.png", name: "천문도", desc: "(별의 운행도)" }
+    ],
     image: "assets/type_6.jpg",
     topImage: "assets/char_top_6.jpg",
     sheetImage: "assets/section5_combined_6.jpg",
