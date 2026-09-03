@@ -669,6 +669,12 @@ const archetypes = {
       characteristics: "외롭지만, 자연과 거인에게 깊은 애정을 가진 소년.",
       keywords: ["평화", "고요", "자연과의 공존", "소망"]
     },
+    representativeItems: [
+      { img: "assets/item_9_1.png", name: "장가지", desc: "(자연과 소통하기 위한 지팡이)" },
+      { img: "assets/item_9_2.png", name: "기록서", desc: "(거인의 역사와 자연의 기록)" },
+      { img: "assets/item_9_3.png", name: "등불", desc: "(빛과 어둠을 밝히는 신뢰의 빛)" },
+      { img: "assets/item_9_4.png", name: "성수", desc: "(거인의 숲을 정화하게 지키는 성수)" }
+    ],
     image: "assets/type_9.jpg",
     topImage: "assets/char_top_9.jpg",
     sheetImage: "assets/section5_combined_9.jpg",
