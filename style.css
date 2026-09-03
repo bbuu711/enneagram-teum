@@ -5,6 +5,14 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'KMU80SungkokSerif';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/2607101542@kmu80sungkokserif/kmu80sungkokserif/KMU80SungkokSerif.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
 /* Reset & Base Styles */
 * {
   box-sizing: border-box;
@@ -970,10 +978,14 @@ input, button, select, textarea, ::placeholder {
 }
 
 .quote-text {
-  font-size: 16px;
-  line-height: 1.6;
+  font-family: 'KMU80SungkokSerif', serif !important;
+  font-size: 21px;
+  line-height: 1.75;
   color: #fef08a;
   margin: 0;
+  letter-spacing: 0.5px;
+  font-weight: normal;
+  text-shadow: 0 0 12px rgba(253, 224, 71, 0.3);
 }
 
 .result-narrative-container {
@@ -1092,29 +1104,31 @@ input, button, select, textarea, ::placeholder {
 .turnaround-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-top: 16px;
+  gap: 14px;
+  margin-top: 18px;
 }
 
 .turnaround-box {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(192, 132, 252, 0.25);
-  border-radius: 12px;
-  padding: 12px 6px;
+  border: 1px solid rgba(192, 132, 252, 0.3);
+  border-radius: 14px;
+  padding: 16px 8px;
   transition: all 0.25s ease;
 }
 
 .turnaround-box:hover {
   border-color: var(--accent-color);
-  background: rgba(253, 224, 71, 0.04);
+  background: rgba(253, 224, 71, 0.05);
+  transform: translateY(-2px);
 }
 
 .turnaround-img-wrap {
   width: 100%;
-  height: 210px;
+  height: 290px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1125,48 +1139,48 @@ input, button, select, textarea, ::placeholder {
   max-height: 100%;
   max-width: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.8));
-}
-
-.turnaround-label {
-  margin-top: 8px;
-  font-size: 14px;
-  color: #c084fc;
-  font-weight: 700;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.85));
 }
 
 /* --- Items Cutouts Section --- */
 .items-cutout-section {
-  padding-top: 16px;
-  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  padding-top: 20px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.12);
 }
 
 .items-cutout-title {
-  font-size: 16px;
+  font-size: 17px;
   color: var(--accent-color);
   text-align: center;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .items-cutout-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
+  gap: 16px;
 }
 
 .item-cutout-box {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 16px;
+  transition: all 0.25s ease;
+}
+
+.item-cutout-box:hover {
+  border-color: rgba(192, 132, 252, 0.4);
+  background: rgba(192, 132, 252, 0.05);
 }
 
 .item-img-wrap {
   width: 100%;
-  height: 140px;
+  height: 180px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1176,7 +1190,7 @@ input, button, select, textarea, ::placeholder {
   max-height: 100%;
   max-width: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.7));
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.75));
 }
 
 /* Responsive styles */
