@@ -454,6 +454,12 @@ const archetypes = {
       characteristics: "멈추지 않고 앞으로 나아가며 자신만의 길을 찾고 있어요.",
       keywords: ["도전", "인내", "희망", "이동", "여행"]
     },
+    representativeItems: [
+      { img: "assets/item_3_1.png", name: "러닝 슈즈", desc: "(카펠고 폰톤암)" },
+      { img: "assets/item_3_2.png", name: "백팩", desc: "(여행과 필수품)" },
+      { img: "assets/item_3_3.png", name: "목표 태그", desc: "(언젠가 도달할 곳)" },
+      { img: "assets/item_3_4.png", name: "물통", desc: "(수분 보충용)" }
+    ],
     image: "assets/type_3.jpg",
     topImage: "assets/char_top_3.jpg",
     sheetImage: "assets/section5_combined_3.jpg",
