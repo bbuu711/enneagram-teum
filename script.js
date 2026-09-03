@@ -418,6 +418,12 @@ const archetypes = {
       characteristics: "잃어버린 화살 대신 사람들의 진심을 모으고 있어요.",
       keywords: ["다정함", "섬세함", "외로움", "진심"]
     },
+    representativeItems: [
+      { img: "assets/item_2_1.png", name: "사냥의 활", desc: "(원거리 또는 민첩)" },
+      { img: "assets/item_2_2.png", name: "화살통", desc: "(마법 보충)" },
+      { img: "assets/item_2_3.png", name: "하트 편지", desc: "(단발성 HP 회복)" },
+      { img: "assets/item_2_4.png", name: "하트 랜턴", desc: "(어두운 장소를 비춤)" }
+    ],
     image: "assets/type_2.jpg",
     topImage: "assets/char_top_2.jpg",
     sheetImage: "assets/section5_combined_2.jpg",
