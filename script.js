@@ -1285,51 +1285,94 @@ function calculateResults() {
   transitionScreen(screenQuiz, screenResult);
 }
 
-// --- Submit form event ---
-btnSubmit.addEventListener('click', () => {
-  sound.playConfirm();
-  btnSubmit.disabled = true;
-  btnSubmit.textContent = "관찰부에 등록 완료";
-  btnSubmit.style.background = "#4b5563";
-  btnSubmit.style.boxShadow = "none";
-  alert(`기록 보관함에 방랑자 ${testerInfo.name}님의 내면 관찰 기록이 안전하게 기록되었습니다!`);
-});
+// --- Submit form event (Database 저장) ---
+if (btnSubmit) {
+  btnSubmit.addEventListener('click', () => {
+    sound.playSuccess();
+    btnSubmit.disabled = true;
+    btnSubmit.innerHTML = '데이터베이스에 저장 중...';
+    btnSubmit.style.background = '#4b5563';
+    btnSubmit.style.boxShadow = 'none';
 
-// --- Details Event ---
-btnDetails.addEventListener('click', () => {
-  sound.playConfirm();
-  
-  detailsStatBarsContainer.innerHTML = '';
-  finalSortedTypes.forEach((item) => {
-    const t = item.type;
-    const scoreVal = finalTypeScores[t]; // Use raw score instead of %
-    const pct = finalPercentages[t];
-    const isDominant = (t === finalSortedTypes[0].type);
-    const labelName = archetypes[t].name;
-    const barItem = document.createElement('div');
-    barItem.className = `stat-item ${isDominant ? 'dominant' : ''}`;
-    
-    barItem.innerHTML = `
-      <div class="stat-header">
-        <span class="stat-label-text">${t}번. ${labelName}</span>
-        <span class="stat-value">${scoreVal}점</span>
-      </div>
-      <div class="stat-bar-outer">
-        <div class="stat-bar-inner" style="width: 0%;"></div>
-      </div>
-    `;
-    
-    detailsStatBarsContainer.appendChild(barItem);
-    
-    // Animate bars on load
+    // Build result record payload
+    const record = {
+      id: 'result_' + Date.now(),
+      tester: testerInfo || { name: '방랑자', age: '', job: '', contact: '' },
+      primaryType: finalSortedTypes[0] ? {
+        number: finalSortedTypes[0].type,
+        name: archetypes[finalSortedTypes[0].type].name
+      } : null,
+      top3: finalSortedTypes.slice(0, 3).map(item => ({
+        type: item.type,
+        name: archetypes[item.type].name,
+        score: finalTypeScores[item.type],
+        percentage: finalPercentages[item.type]
+      })),
+      scores: finalTypeScores,
+      percentages: finalPercentages,
+      answers: answers,
+      createdAt: new Date().toISOString()
+    };
+
+    // 1. Save to localStorage database
+    try {
+      const existingDb = JSON.parse(localStorage.getItem('enneagram_results_db') || '[]');
+      existingDb.push(record);
+      localStorage.setItem('enneagram_results_db', JSON.stringify(existingDb));
+    } catch (err) {
+      console.error('LocalStorage save error:', err);
+    }
+
+    // 2. Simulated DB latency for smooth feedback
     setTimeout(() => {
-      const innerBar = barItem.querySelector('.stat-bar-inner');
-      if (innerBar) innerBar.style.width = `${pct}%`;
-    }, 150);
+      btnSubmit.innerHTML = '✓ 데이터베이스 제출 완료';
+      btnSubmit.style.background = '#15803d'; // Rich green
+      btnSubmit.style.color = '#fff';
+      btnSubmit.style.boxShadow = '0 0 15px rgba(34, 197, 94, 0.4)';
+      
+      alert(`[기록 보관 완료]\n방랑자 ${record.tester.name}님의 검사 결과가 데이터베이스에 안전하게 저장되었습니다.`);
+    }, 600);
   });
-  
-  transitionScreen(screenResult, screenDetails);
-});
+}
+
+// --- Details Event (Optional fallback) ---
+if (btnDetails) {
+  btnDetails.addEventListener('click', () => {
+    sound.playConfirm();
+    
+    if (detailsStatBarsContainer) {
+      detailsStatBarsContainer.innerHTML = '';
+      finalSortedTypes.forEach((item) => {
+        const t = item.type;
+        const scoreVal = finalTypeScores[t];
+        const pct = finalPercentages[t];
+        const isDominant = (t === finalSortedTypes[0].type);
+        const labelName = archetypes[t].name;
+        const barItem = document.createElement('div');
+        barItem.className = `stat-item ${isDominant ? 'dominant' : ''}`;
+        
+        barItem.innerHTML = `
+          <div class="stat-header">
+            <span class="stat-label-text">${t}번. ${labelName}</span>
+            <span class="stat-value">${scoreVal}점</span>
+          </div>
+          <div class="stat-bar-outer">
+            <div class="stat-bar-inner" style="width: 0%;"></div>
+          </div>
+        `;
+        
+        detailsStatBarsContainer.appendChild(barItem);
+        
+        setTimeout(() => {
+          const innerBar = barItem.querySelector('.stat-bar-inner');
+          if (innerBar) innerBar.style.width = `${pct}%`;
+        }, 150);
+      });
+    }
+    
+    transitionScreen(screenResult, screenDetails);
+  });
+}
 
 // --- Close Details Event ---
 const btnClose = document.getElementById('btn-close');
@@ -1340,24 +1383,49 @@ if (btnClose) {
   });
 }
 
-// --- Restart Event ---
-btnRestart.addEventListener('click', () => {
-  sound.playConfirm();
-  
-  // Clear inputs
-  betaName.value = '';
-  betaAge.value = '';
-  betaJob.value = '';
-  betaContact.value = '';
-  betaAgree.checked = false;
-  btnStartQuiz.disabled = true;
-  btnStartQuiz.classList.add('btn-disabled');
+// --- Restart Event (처음 start 화면으로 복귀) ---
+if (btnRestart) {
+  btnRestart.addEventListener('click', () => {
+    sound.playConfirm();
+    
+    // Clear inputs
+    if (betaName) betaName.value = '';
+    if (betaAge) betaAge.value = '';
+    if (betaJob) betaJob.value = '';
+    if (betaContact) betaContact.value = '';
+    if (betaAgree) betaAgree.checked = false;
+    if (btnStartQuiz) {
+      btnStartQuiz.disabled = true;
+      btnStartQuiz.classList.add('btn-disabled');
+    }
 
-  btnSubmit.disabled = false;
-  btnSubmit.textContent = "기록 제출 및 인연 맺기";
-  btnSubmit.style.background = "";
-  btnSubmit.style.boxShadow = "";
+    // Reset test state
+    answers = {};
+    quizPageIndex = 0;
+    storyPageIndex = 0;
+    testerInfo = null;
 
-  transitionScreen(screenResult, screenStory);
-  startStorySequence();
-});
+    if (btnSubmit) {
+      btnSubmit.disabled = false;
+      btnSubmit.innerHTML = '제출하기';
+      btnSubmit.style.background = '';
+      btnSubmit.style.boxShadow = '';
+      btnSubmit.style.color = '';
+    }
+
+    // Reset progress bar
+    if (progressBar) progressBar.style.width = '0%';
+    if (progressCharacter) progressCharacter.style.left = '0%';
+    document.documentElement.style.setProperty('--progress-ratio', 0);
+
+    // Return to screen-intro (Start Screen)
+    const screenIntro = document.getElementById('screen-intro');
+    if (screenIntro) {
+      transitionScreen(screenResult, screenIntro);
+      startStorySequence();
+    } else {
+      transitionScreen(screenResult, screenStory);
+      startStorySequence();
+    }
+  });
+}
