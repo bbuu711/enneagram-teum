@@ -599,6 +599,12 @@ const archetypes = {
       characteristics: "무대 뒤의 어둠 속에서 혼자 감정을 다스려요.",
       keywords: ["열정", "모험", "즐거움", "무대의 어둠"]
     },
+    representativeItems: [
+      { img: "assets/item_7_1.png", name: "빨간 풍선", desc: "(유일한 친구)" },
+      { img: "assets/item_7_2.png", name: "서커스 티켓", desc: "(붉고 찬란한 무대 위의 기억)" },
+      { img: "assets/item_7_3.png", name: "오일 랜턴", desc: "(무대 뒤 유일한 빛)" },
+      { img: "assets/item_7_4.png", name: "광대 가면", desc: "(웃음을 위한 가면)" }
+    ],
     image: "assets/type_7.jpg",
     topImage: "assets/char_top_7.jpg",
     sheetImage: "assets/section5_combined_7.jpg",
