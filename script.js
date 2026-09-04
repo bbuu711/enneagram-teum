@@ -1287,12 +1287,12 @@ function calculateResults() {
 
 // --- Supabase Configuration ---
 // Supabase 프로젝트 연동 (URL 및 Anon Key 설정)
-const SUPABASE_URL = window.SUPABASE_URL || 'https://YOUR_SUPABASE_PROJECT_URL.supabase.co';
-const SUPABASE_ANON_KEY = window.SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY';
+const SUPABASE_URL = 'https://qcfpkwubdngeqtmxrjrz.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFjZnBrd3ViZG5nZXF0bXhyanJ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg0NTM0MDQsImV4cCI6MjEwNDAyOTQwNH0.rnziVpIWggyCBeF6uIMc1OaDMSNJGAIQ9NMm7aho7dg';
 
 let supabaseClient = null;
 function getSupabaseClient() {
-  if (!supabaseClient && window.supabase && SUPABASE_URL && !SUPABASE_URL.includes('YOUR_SUPABASE_PROJECT_URL')) {
+  if (!supabaseClient && window.supabase && SUPABASE_URL) {
     try {
       supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     } catch (e) {
