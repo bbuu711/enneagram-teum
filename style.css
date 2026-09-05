@@ -239,6 +239,8 @@ input, button, select, textarea, ::placeholder {
   color: #8b6e4e !important;
   margin-top: 28px;
   font-size: 14px;
+  text-align: center !important;
+  width: 100%;
 }
 
 @keyframes unfurlScroll {
@@ -300,11 +302,14 @@ input, button, select, textarea, ::placeholder {
 }
 
 .next-indicator {
-  font-size: 16px;
-  color: #7c769b;
-  text-align: right;
-  margin-top: 10px;
+  font-size: 15px;
+  color: #c084fc;
+  text-align: center !important;
+  margin-top: 14px;
+  width: 100%;
+  display: block;
   animation: pulse 2s infinite;
+  letter-spacing: 0.5px;
 }
 
 /* Glow Cursor */

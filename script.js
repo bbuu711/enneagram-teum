@@ -1,18 +1,132 @@
-// --- Audio Effects System (Web Audio API Synthesizer) ---
+// --- Audio Effects System & Continuous Fantasy RPG BGM Generator ---
 class GameSound {
   constructor() {
     this.ctx = null;
     this.muted = false;
+    this.bgmGain = null;
+    this.bgmPlaying = false;
+    this.bgmTimer = null;
+    this.chordStep = 0;
   }
 
   init() {
     if (!this.ctx) {
-      this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (AudioCtx) {
+        this.ctx = new AudioCtx();
+      }
     }
+    if (this.ctx && this.ctx.state === 'suspended') {
+      this.ctx.resume();
+    }
+  }
+
+  startBgm() {
+    if (this.bgmPlaying) {
+      if (this.ctx && this.ctx.state === 'suspended') {
+        this.ctx.resume();
+      }
+      return;
+    }
+    this.init();
+    if (!this.ctx) return;
+
+    this.bgmPlaying = true;
+    this.bgmGain = this.ctx.createGain();
+    this.bgmGain.gain.setValueAtTime(this.muted ? 0 : 0.16, this.ctx.currentTime);
+    this.bgmGain.connect(this.ctx.destination);
+
+    // Ethereal mystical chord progression for "The Rift of Memories"
+    const progression = [
+      // Fmaj7: F3, A3, C4, E4
+      [174.61, 220.00, 261.63, 329.63],
+      // Am7: A3, C4, E4, G4
+      [220.00, 261.63, 329.63, 392.00],
+      // Dm9: D3, F3, A3, C4, E4
+      [146.83, 174.61, 220.00, 261.63, 329.63],
+      // Em7: E3, G3, B3, D4
+      [164.81, 196.00, 246.94, 293.66],
+      // Cmaj7: C3, G3, B3, E4
+      [130.81, 196.00, 246.94, 329.63],
+      // G6: G3, B3, D4, E4
+      [196.00, 246.94, 293.66, 329.63]
+    ];
+
+    const melodyNotes = [523.25, 587.33, 659.25, 783.99, 880.00, 1046.50];
+    const chordDuration = 5.2;
+
+    const playNextMeasure = () => {
+      if (!this.bgmPlaying || !this.ctx) return;
+      if (this.ctx.state === 'suspended') {
+        this.ctx.resume();
+      }
+
+      const now = this.ctx.currentTime;
+      const currentChord = progression[this.chordStep % progression.length];
+      this.chordStep++;
+
+      // Warm Lowpass Filter for Dreamy Ambient Sound
+      const filter = this.ctx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(500, now);
+      filter.frequency.linearRampToValueAtTime(720, now + chordDuration * 0.5);
+      filter.frequency.linearRampToValueAtTime(500, now + chordDuration);
+      filter.connect(this.bgmGain);
+
+      // Pad Oscillators
+      currentChord.forEach((freq, idx) => {
+        const osc = this.ctx.createOscillator();
+        const chordGain = this.ctx.createGain();
+
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, now);
+        osc.detune.setValueAtTime((Math.random() - 0.5) * 10, now);
+
+        chordGain.gain.setValueAtTime(0.0001, now);
+        chordGain.gain.linearRampToValueAtTime(0.022, now + 1.8);
+        chordGain.gain.setValueAtTime(0.022, now + chordDuration - 1.8);
+        chordGain.gain.linearRampToValueAtTime(0.0001, now + chordDuration);
+
+        osc.connect(chordGain);
+        chordGain.connect(filter);
+
+        osc.start(now);
+        osc.stop(now + chordDuration + 0.1);
+      });
+
+      // Ambient Music Box / Bell Chimes
+      if (Math.random() > 0.2) {
+        const bellTime = now + 1.2 + Math.random() * (chordDuration - 2.6);
+        const bellFreq = melodyNotes[Math.floor(Math.random() * melodyNotes.length)];
+
+        const bellOsc = this.ctx.createOscillator();
+        const bellGain = this.ctx.createGain();
+
+        bellOsc.type = 'sine';
+        bellOsc.frequency.setValueAtTime(bellFreq, bellTime);
+
+        bellGain.gain.setValueAtTime(0.0001, bellTime);
+        bellGain.gain.linearRampToValueAtTime(0.028, bellTime + 0.04);
+        bellGain.gain.exponentialRampToValueAtTime(0.0001, bellTime + 2.5);
+
+        bellOsc.connect(bellGain);
+        bellGain.connect(this.bgmGain);
+
+        bellOsc.start(bellTime);
+        bellOsc.stop(bellTime + 2.6);
+      }
+
+      this.bgmTimer = setTimeout(playNextMeasure, (chordDuration - 0.2) * 1000);
+    };
+
+    playNextMeasure();
   }
 
   toggleMute() {
     this.muted = !this.muted;
+    if (this.bgmGain && this.ctx) {
+      this.bgmGain.gain.setValueAtTime(this.muted ? 0 : 0.16, this.ctx.currentTime);
+    }
     return this.muted;
   }
 
@@ -1572,3 +1686,11 @@ if (btnRestart) {
     }
   });
 }
+
+// Global user interaction to guarantee continuous ambient background music
+['click', 'touchstart', 'keydown'].forEach(evtType => {
+  document.addEventListener(evtType, () => {
+    sound.init();
+    sound.startBgm();
+  }, { once: false });
+});
