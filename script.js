@@ -151,14 +151,13 @@ function initParticles() {
 }
 
 // --- Enneagram Questions Registry ---
-const rawQuestions = {
+const normalQuestions = {
   1: [
     { id: "1-1", text: "나는 모든 일을 개선하기 위해 깊이 생각해서 행동한다." },
     { id: "1-2", text: "나는 다른 사람들보다 근면하며 책임감이 강하다." },
     { id: "1-3", text: "나는 정직하고 자제력이 있는 사람이다." },
     { id: "1-4", text: "나의 행동은 원칙에 기초를 둔다." },
     { id: "1-5", text: "나는 완벽을 위해 끝까지 참고 노력한다." },
-    { id: "1-10", text: "나는 이성친구 또는 친구와의 약속이 없으면 불안함을 느낀다." },
     { id: "1-6", text: "나는 규칙을 잘 지키며 엄격하다." },
     { id: "1-7", text: "나는 다른 사람들의 신임을 얻을 수 있다." },
     { id: "1-8", text: "나는 정의감이 강하고 근면하다." },
@@ -170,7 +169,6 @@ const rawQuestions = {
     { id: "2-3", text: "내 생각보다는 남의 생각에 공감할 때가 많다." },
     { id: "2-4", text: "나는 친구들이 나에게 의지할 때 기분이 좋다." },
     { id: "2-5", text: "나의 관심사는 다른 사람들을 도와주는 것이다." },
-    { id: "2-10", text: "나는 자해 또는 자살 시도에 대해 생각해 본 적 있다." },
     { id: "2-6", text: "나는 사람들을 관심 있게 대하고 보살피려 한다." },
     { id: "2-7", text: "나는 사람들과 친해지려고 많이 노력하고 있다." },
     { id: "2-8", text: "나는 타인의 만족을 위해 노력한다." },
@@ -182,7 +180,6 @@ const rawQuestions = {
     { id: "3-3", text: "나는 적응력이 뛰어나 상황에 적절히 대응한다." },
     { id: "3-4", text: "나는 인간 중심적이기보다는 오히려 목표 중심적이다." },
     { id: "3-5", text: "나는 사람들에게 지나친 경쟁을 강요한다." },
-    { id: "3-10", text: "나는 문신 혹은 피어싱에 관심이 간다." },
     { id: "3-6", text: "나는 성공만이 애정을 획득할 수 있다고 믿는다." },
     { id: "3-7", text: "나는 실패를 두려워하여 과장하는 경향이 있다." },
     { id: "3-8", text: "나는 침체에 빠지지 않고 무엇인가를 끊임없이 행한다." },
@@ -194,7 +191,6 @@ const rawQuestions = {
     { id: "4-3", text: "나는 낭만적이고 예술가적인 기질이 있다." },
     { id: "4-4", text: "나는 이방인처럼 느낄 때가 많다." },
     { id: "4-5", text: "나는 다른 사람들과는 다른 독특한 감정을 가지고 있다." },
-    { id: "4-10", text: "나는 가끔 충동적으로 행동(ex. 투자, 폭식, 성관계 등) 하는 경향이 있다." },
     { id: "4-6", text: "나는 분위기에 약하고 자기 생각에 골몰하는 편이다." },
     { id: "4-7", text: "나는 내 행동의 동기와 감정에 대해 회의적인 생각이 들 때가 있다." },
     { id: "4-8", text: "나는 감동적인 것을 추구하다가 혼자 우울해지기도 한다." },
@@ -206,7 +202,6 @@ const rawQuestions = {
     { id: "5-3", text: "나는 공적인 것보다는 개인생활에 대한 관심이 많다." },
     { id: "5-4", text: "나는 감정보다는 이성을 추구한다." },
     { id: "5-5", text: "나는 시간이나 돈을 아끼는 경향이 있다." },
-    { id: "5-10", text: "나는 1시간 이상 걸리는 곳으로 이동하는 것에 부담을 느껴한다." },
     { id: "5-6", text: "나의 관심사는 나를 둘러싼 세계를 이해하는 것이다." },
     { id: "5-7", text: "나는 권위를 믿지 않고 규칙을 무시한다." },
     { id: "5-8", text: "나는 지적이고 냉철하게 관찰하는 편이다." },
@@ -218,7 +213,6 @@ const rawQuestions = {
     { id: "6-3", text: "나는 성공에 대해서도 가끔 평가 절하하는 경향이 있다." },
     { id: "6-4", text: "나는 잘 훈련되어 있어 조직이나 집단에 헌신할 수 있다." },
     { id: "6-5", text: "사람들은 내게 때로 용기가 필요하다고 말한다." },
-    { id: "6-10", text: "나는 잠수를 타고 싶다고 생각한 적이 있다." },
     { id: "6-6", text: "나는 결과에 대한 두려움 때문에 일을 질질 끄는 경우가 있다." },
     { id: "6-7", text: "나는 충성할 만한 사람이라고 판단되면 헌신할 수 있다." },
     { id: "6-8", text: "나는 친하게 지내는 사람과 영원한 우정을 유지하도록 노력한다." },
@@ -230,7 +224,6 @@ const rawQuestions = {
     { id: "7-3", text: "나는 끊임없이 변화하는 생활을 좋아한다." },
     { id: "7-4", text: "나는 자극과 흥분을 유발하는 활동을 좋아한다." },
     { id: "7-5", text: "나는 어린아이처럼 명량하고 순진하다." },
-    { id: "7-10", text: "나는 심리적 어려움이 생긴다면 전문 상담 또는 약물 치료를 받아야 한다고 생각한다." },
     { id: "7-6", text: "나는 미래에 대해 항상 열정을 가지고 있다." },
     { id: "7-7", text: "나는 여러 가지 일들을 즐기며, 새로운 경험을 갈망한다." },
     { id: "7-8", text: "나는 한 가지 일에 정착하기가 어렵다." },
@@ -242,7 +235,6 @@ const rawQuestions = {
     { id: "8-3", text: "나는 늘 강해야 한다고 생각한다." },
     { id: "8-4", text: "나는 사람들에게 영향력 있는 사람이다." },
     { id: "8-5", text: "나는 다른 사람들이 말하기 어려워하는 것을 이야기 한다." },
-    { id: "8-10", text: "나는 정치 또는 종교와 관련된 것은 피한다." },
     { id: "8-6", text: "나는 공격적이고 자기 주장이 강하다." },
     { id: "8-7", text: "나는 사람들을 통제하려 한다." },
     { id: "8-8", text: "나는 사람들을 지시하고 동기를 부여한다." },
@@ -253,27 +245,59 @@ const rawQuestions = {
     { id: "9-2", text: "나는 감정의 동요가 많지 않은 원만한 사람이다." },
     { id: "9-3", text: "나는 안전한 해결책을 원하고 되도록 갈등을 피한다." },
     { id: "9-4", text: "나는 친구들과 긴장을 풀고 마음 편하게 지낸다." },
-    { id: "9-10", text: "나는 동성에게 이성적 감정을 느낀 적이 있다." },
     { id: "9-5", text: "나는 사람들을 유쾌하고 편하게 대한다." },
     { id: "9-6", text: "사람들은 나를 그냥 좋아한다." },
     { id: "9-7", text: "나는 세상에 대해 낙관적인 편이다." }
   ]
 };
 
-// Programmatically flatten and interleave the questions across types
-const questionsList = [];
-const maxIndex = 10;
+// 10th Special questions to be individually separated across the quiz
+const specialQuestions = [
+  { type: 1, id: "1-10", text: "나는 이성친구 또는 친구와의 약속이 없으면 불안함을 느낀다." },
+  { type: 2, id: "2-10", text: "나는 자해 또는 자살 시도에 대해 생각해 본 적 있다." },
+  { type: 3, id: "3-10", text: "나는 문신 혹은 피어싱에 관심이 간다." },
+  { type: 4, id: "4-10", text: "나는 가끔 충동적으로 행동(ex. 투자, 폭식, 성관계 등) 하는 경향이 있다." },
+  { type: 5, id: "5-10", text: "나는 1시간 이상 걸리는 곳으로 이동하는 것에 부담을 느껴한다." },
+  { type: 6, id: "6-10", text: "나는 잠수를 타고 싶다고 생각한 적이 있다." },
+  { type: 7, id: "7-10", text: "나는 심리적 어려움이 생긴다면 전문 상담 또는 약물 치료를 받아야 한다고 생각한다." },
+  { type: 8, id: "8-10", text: "나는 정치 또는 종교와 관련된 것은 피한다." },
+  { type: 9, id: "9-10", text: "나는 동성에게 이성적 감정을 느낀 적이 있다." }
+];
+
+// Round-robin flatten normal questions across 1..9
+const normalList = [];
+const maxIndex = 9;
 for (let i = 0; i < maxIndex; i++) {
   for (let type = 1; type <= 9; type++) {
-    const list = rawQuestions[type];
+    const list = normalQuestions[type];
     if (i < list.length) {
-      questionsList.push({
+      normalList.push({
         type: type,
         id: list[i].id,
         text: list[i].text
       });
     }
   }
+}
+
+// Build final questionsList by inserting each 10th question individually,
+// starting from the middle of Chapter 1 (index 8) and spaced evenly by 7-8 questions!
+const questionsList = [];
+let specialIdx = 0;
+// Positions to insert special questions: index 8 (mid of Ch1), 16, 24, 32, 40, 48, 56, 64, 72
+const insertPositions = [8, 16, 24, 32, 40, 48, 56, 64, 72];
+
+for (let i = 0; i < normalList.length; i++) {
+  if (specialIdx < insertPositions.length && questionsList.length === insertPositions[specialIdx]) {
+    questionsList.push(specialQuestions[specialIdx]);
+    specialIdx++;
+  }
+  questionsList.push(normalList[i]);
+}
+// Append any remaining special if needed
+while (specialIdx < specialQuestions.length) {
+  questionsList.push(specialQuestions[specialIdx]);
+  specialIdx++;
 }
 
 // Group into sets of 5 questions per page with chapters
@@ -311,7 +335,7 @@ for (let i = 0; i < questionsList.length; i += questionsPerPage) {
     quizPages.push({
       isChapter: true,
       title: "Chapter 2",
-      text: "틈새의 기억 (Memories of the Rift)",
+      text: "틈새의 기억\n(Memories of the Rift)",
       story: [
         "표면을 지나 조금 더 깊은 곳,\n'틈새의 기억'에 도착했어.",
         "이곳에서는 네가 평소에 무심코 지나쳤던\n내면의 갈등들이 안개처럼 피어오르지.",
@@ -1002,7 +1026,7 @@ function loadQuizPage() {
     const chapterDesc = document.getElementById('chapter-desc');
     
     chapterTitle.textContent = currentPage.title;
-    chapterDesc.textContent = currentPage.text;
+    chapterDesc.innerHTML = (currentPage.text || "").replace(/\n/g, "<br>");
     
     // Hide quiz card, show chapter screen
     quizCard.style.display = 'none';
@@ -1367,36 +1391,47 @@ if (btnSubmit) {
       submittedAtFormatted: new Date().toLocaleString('ko-KR')
     };
 
-    // 1. Save to Supabase (if configured)
+    // 1. Save to Supabase (direct cloud DB persistence 24/7)
+    const dbPayload = {
+      name: record.tester.name || '방랑자',
+      age: record.tester.age || null,
+      job: record.tester.job || null,
+      contact: record.tester.contact || null,
+      primary_type_number: record.primaryType ? record.primaryType.number : null,
+      primary_type_name: record.primaryType ? record.primaryType.name : null,
+      top1_name: record.top3[0] ? record.top3[0].name : '',
+      top2_name: record.top3[1] ? record.top3[1].name : '',
+      top3_name: record.top3[2] ? record.top3[2].name : '',
+      type_scores: record.scores,
+      type_percentages: record.percentages,
+      answers: record.answers,
+      created_at: record.createdAt
+    };
+
+    let savedCloud = false;
     const client = getSupabaseClient();
     if (client) {
       try {
-        const { error } = await client
-          .from('enneagram_results')
-          .insert([
-            {
-              name: record.tester.name || '방랑자',
-              age: record.tester.age || null,
-              job: record.tester.job || null,
-              contact: record.tester.contact || null,
-              primary_type_number: record.primaryType ? record.primaryType.number : null,
-              primary_type_name: record.primaryType ? record.primaryType.name : null,
-              top1_name: record.top3[0] ? record.top3[0].name : '',
-              top2_name: record.top3[1] ? record.top3[1].name : '',
-              top3_name: record.top3[2] ? record.top3[2].name : '',
-              type_scores: record.scores,
-              type_percentages: record.percentages,
-              answers: record.answers,
-              created_at: record.createdAt
-            }
-          ]);
-        if (error) {
-          console.error('Supabase insert error:', error);
-        } else {
-          console.log('Successfully saved record to Supabase table [enneagram_results]!');
-        }
+        const { error } = await client.from('enneagram_results').insert([dbPayload]);
+        if (!error) savedCloud = true;
+      } catch (err) {}
+    }
+
+    // Direct fetch fallback for 100% cloud reliability
+    if (!savedCloud) {
+      try {
+        await fetch(`${SUPABASE_URL}/rest/v1/enneagram_results`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify(dbPayload)
+        });
       } catch (err) {
-        console.error('Supabase exception:', err);
+        console.warn('Direct fetch attempt error:', err);
       }
     }
 

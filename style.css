@@ -436,9 +436,10 @@ input, button, select, textarea, ::placeholder {
 .progress-bar-inner {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #7c3aed 0%, #a855f7 100%);
+  background: linear-gradient(90deg, #a855f7 0%, #6b21a8 50%, #2e1065 75%, #05030e 100%);
   border-radius: 4px;
   transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
 }
 
 .progress-character {
@@ -635,9 +636,10 @@ input, button, select, textarea, ::placeholder {
 .progress-bar-inner {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #7c3aed 0%, #a855f7 100%);
+  background: linear-gradient(90deg, #a855f7 0%, #6b21a8 50%, #2e1065 75%, #05030e 100%);
   border-radius: 4px;
   transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
 }
 
 .progress-character {
@@ -1426,4 +1428,64 @@ input, button, select, textarea, ::placeholder {
     padding: 14px !important;
     font-size: 16px !important;
   }
+}
+
+
+/* Result Screen Serif Font (KMU80SungkokSerif) */
+.result-npc-name {
+  font-family: 'KMU80SungkokSerif', 'Noto Serif KR', serif !important;
+  font-size: 34px;
+  font-weight: normal;
+  color: #fff;
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.result-tagline {
+  font-family: 'KMU80SungkokSerif', 'Noto Serif KR', serif !important;
+  font-size: 16px;
+  color: var(--accent-color);
+  font-weight: normal;
+}
+
+.result-narrative-container, .narrative-body, .narrative-subtitle {
+  font-family: 'KMU80SungkokSerif', 'Noto Serif KR', serif !important;
+  font-size: 16.5px;
+  line-height: 1.8;
+  color: #f1edff;
+}
+
+.narrative-subtitle {
+  font-size: 20px;
+  color: var(--theme-color);
+}
+
+.features-box, .features-title, #result-features-content, #result-features-content li {
+  font-family: 'KMU80SungkokSerif', 'Noto Serif KR', serif !important;
+  font-size: 15.5px;
+  line-height: 1.7;
+}
+
+.features-title {
+  font-size: 17px;
+  color: #34d399;
+  font-weight: bold;
+}
+
+.item-name {
+  font-family: 'KMU80SungkokSerif', 'Noto Serif KR', serif !important;
+  font-size: 16px;
+  font-weight: normal;
+  color: #fde047;
+}
+
+.item-desc {
+  font-family: 'KMU80SungkokSerif', 'Noto Serif KR', serif !important;
+  font-size: 13px;
+  color: #cfcbef;
+}
+
+.items-cutout-title, .sheet-title, .section-title {
+  font-family: 'KMU80SungkokSerif', 'Noto Serif KR', serif !important;
 }
