@@ -1206,7 +1206,7 @@ function mapScore(rating) {
 function calculateResults() {
   sound.playSuccess();
 
-  // 1. Calculate raw score sums for each of the 9 types
+  // 1. Calculate pure raw score sums for each of the 9 types (1=1점, 2=2점, 3=4점, 4=5점)
   let typeScores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 };
   
   Object.keys(answers).forEach(qid => {
@@ -1215,15 +1215,10 @@ function calculateResults() {
     typeScores[type] += scoreVal;
   });
 
-  // 2. Normalization for Type 9 (Type 9 has 8 questions, others have 10)
-  const originalType9Raw = typeScores[9];
-  typeScores[9] = Math.round(originalType9Raw * 1.25 * 10) / 10; // Multiply by 1.25, round to 1 decimal place
-
-  // 3. Scale scores out of 100 for better chart display (max possible normalized score is 50)
-  // Max score for types is 50. Convert to percentage: score * 2
+  // 2. Pure integer percentage for radar/bar display
   let percentages = {};
   for (let t = 1; t <= 9; t++) {
-    percentages[t] = Math.min(100, Math.round((typeScores[t] / 50) * 100));
+    percentages[t] = typeScores[t];
   }
 
   // 4. Sort and find Top 3 types
