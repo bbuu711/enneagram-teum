@@ -211,19 +211,53 @@ input, button, select, textarea, ::placeholder {
 }
 
 .scroll-content {
-  padding: 40px 30px;
+  padding: 40px 24px;
   text-align: center;
-  opacity: 0;
-  animation: fadeInScrollContent 0.8s ease forwards 0.8s;
+  opacity: 1 !important;
+}
+
+.chapter-title-text {
+  font-family: 'KMU80SungkokSerif', 'Pretendard', serif !important;
+  color: #5a3c11 !important;
+  margin-bottom: 18px;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.chapter-desc-text {
+  font-family: 'KMU80SungkokSerif', 'Pretendard', serif !important;
+  color: #4a3319 !important;
+  font-size: 24px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: keep-all;
+  font-weight: 600;
+}
+
+.chapter-next-text {
+  color: #8b6e4e !important;
+  margin-top: 28px;
+  font-size: 14px;
 }
 
 @keyframes unfurlScroll {
-  0% { transform: scaleY(0); height: 0; }
-  100% { transform: scaleY(1); height: auto; }
+  0% { transform: scaleY(0); }
+  100% { transform: scaleY(1); }
 }
 
-@keyframes fadeInScrollContent {
-  to { opacity: 1; }
+@media (max-width: 600px) {
+  .scroll-content {
+    padding: 32px 16px !important;
+  }
+  .chapter-title-text {
+    font-size: 26px !important;
+    margin-bottom: 14px !important;
+  }
+  .chapter-desc-text {
+    font-size: 20px !important;
+    line-height: 1.5 !important;
+  }
 }
 
 /* 0. Story Dialog box styling */

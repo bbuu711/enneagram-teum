@@ -307,7 +307,7 @@ const questionsPerPage = 5;
 quizPages.push({
   isChapter: true,
   title: "Chapter 1",
-  text: "표면의 세계 (The Surface World)",
+  text: "표면의 세계\n(The Surface World)",
   story: [
     "자, 이제 점점 더 깊은 곳으로 들어가는\n여정을 시작해볼까?",
     "첫 번째 목적지는 네 마음의 가장 바깥쪽,\n'표면의 세계'야.",
@@ -347,7 +347,7 @@ for (let i = 0; i < questionsList.length; i += questionsPerPage) {
     quizPages.push({
       isChapter: true,
       title: "Chapter 3",
-      text: "심연의 세계 (The Abyssal World)",
+      text: "심연의 세계\n(The Abyssal World)",
       story: [
         "드디어 마지막 목적지,\n'심연의 세계'의 문 앞에 섰어.",
         "네 마음속 가장 깊은 곳에 웅크리고 있는\n진짜 '틈'의 모양이 보일 거야.",
@@ -1038,11 +1038,14 @@ function loadQuizPage() {
     transitionScreen(null, screenLoading);
     
     const scrollContainer = document.getElementById('chapter-scroll');
-    scrollContainer.style.animation = 'none'; // reset while hidden
+    const scrollContent = scrollContainer.querySelector('.scroll-content');
+    scrollContainer.style.animation = 'none';
+    if (scrollContent) scrollContent.style.opacity = '1';
     
     setTimeout(() => {
       scrollContainer.offsetHeight; // trigger reflow
       scrollContainer.style.animation = 'unfurlScroll 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards';
+      if (scrollContent) scrollContent.style.opacity = '1';
       transitionScreen(screenLoading, screenChapter);
     }, 3000);
     
