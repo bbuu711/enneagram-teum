@@ -746,6 +746,8 @@ const storySystemBox = document.getElementById('story-system-box');
 // Form inputs
 const betaName = document.getElementById('beta-name');
 const betaAge = document.getElementById('beta-age');
+const betaGender = document.getElementById('beta-gender');
+const genderButtons = document.querySelectorAll('.btn-gender');
 const betaJob = document.getElementById('beta-job');
 const betaContact = document.getElementById('beta-contact');
 const betaAgree = document.getElementById('beta-agree');
@@ -957,11 +959,13 @@ function transitionScreen(from, to) {
 // --- 1. Form validation sheet ---
 function setupFormValidation() {
   const fields = [betaName, betaAge, betaJob, betaContact];
+  
   const validate = () => {
-    const allFilled = fields.every(input => input.value.trim() !== '');
-    const agreed = betaAgree.checked;
+    const allFilled = fields.every(input => input && input.value.trim() !== '');
+    const genderFilled = betaGender && betaGender.value.trim() !== '';
+    const agreed = betaAgree && betaAgree.checked;
     
-    if (allFilled && agreed) {
+    if (allFilled && genderFilled && agreed) {
       btnStartQuiz.disabled = false;
       btnStartQuiz.classList.remove('btn-disabled');
     } else {
@@ -969,18 +973,36 @@ function setupFormValidation() {
       btnStartQuiz.classList.add('btn-disabled');
     }
   };
+  window.validateForm = validate;
 
-  fields.forEach(f => f.addEventListener('input', validate));
-  betaAgree.addEventListener('change', validate);
+  genderButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      sound.playClick();
+      genderButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      betaGender.value = btn.getAttribute('data-gender');
+      validate();
+    });
+  });
+
+  fields.forEach(f => {
+    if (f) f.addEventListener('input', validate);
+  });
+  if (betaAgree) betaAgree.addEventListener('change', validate);
 
   btnStartQuiz.addEventListener('click', () => {
     if (btnStartQuiz.disabled) return;
     btnStartQuiz.disabled = true; // prevent double clicks
     sound.playConfirm();
     
+    const birth = betaAge.value.trim();
+    const gender = betaGender.value.trim();
+    
     testerInfo = {
       name: betaName.value.trim(),
-      age: betaAge.value.trim(),
+      age: `${birth} / ${gender}`,
+      gender: gender,
+      birth: birth,
       job: betaJob.value.trim(),
       contact: betaContact.value.trim()
     };
@@ -1515,6 +1537,8 @@ if (btnRestart) {
     // Clear inputs
     if (betaName) betaName.value = '';
     if (betaAge) betaAge.value = '';
+  if (betaGender) betaGender.value = '';
+  if (genderButtons) genderButtons.forEach(b => b.classList.remove('active'));
     if (betaJob) betaJob.value = '';
     if (betaContact) betaContact.value = '';
     if (betaAgree) betaAgree.checked = false;

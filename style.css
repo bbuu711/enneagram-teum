@@ -1523,3 +1523,45 @@ input, button, select, textarea, ::placeholder {
 .items-cutout-title, .sheet-title, .section-title {
   font-family: 'KMU80SungkokSerif', 'Noto Serif KR', serif !important;
 }
+
+/* Gender Button Group */
+.gender-btn-group {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.btn-gender {
+  flex: 1;
+  padding: 13px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  color: #cbd5e1;
+  font-family: 'Pretendard', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.btn-gender:hover {
+  background: rgba(192, 132, 252, 0.12);
+  border-color: rgba(192, 132, 252, 0.4);
+  color: #f8fafc;
+  transform: translateY(-1px);
+}
+
+.btn-gender.active {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.35) 0%, rgba(147, 51, 234, 0.45) 100%);
+  border: 1.5px solid #c084fc;
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.4), inset 0 0 10px rgba(192, 132, 252, 0.25);
+  font-weight: 700;
+  transform: translateY(-1px);
+}

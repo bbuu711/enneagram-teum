@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Noto+Sans+KR:wght@300;400;500;700&family=Dancing+Script:wght@700&family=Nanum+Pen+Script&family=VT323&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/gh/neodgm/neodgm-webfont@latest/neodgm/style.css?v=20260905_ch_fix" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260905_ch_fix">
+  <link href="https://cdn.jsdelivr.net/gh/neodgm/neodgm-webfont@latest/neodgm/style.css?v=20260905_gender" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20260905_gender">
   <style>
     @font-face {
       font-family: 'KMU80SungkokSerif';
@@ -78,15 +78,23 @@
           <input type="text" id="beta-name" placeholder="예시) 홍길동" autocomplete="off">
         </div>
         <div class="form-group">
-          <label>2. 생년월일 및 성별 <span class="required">*</span></label>
-          <input type="text" id="beta-age" placeholder="예: 2000.01.01 / 여성" autocomplete="off">
+          <label>2. 생년월일 <span class="required">*</span></label>
+          <input type="text" id="beta-age" placeholder="예: 2000.01.01" autocomplete="off">
         </div>
         <div class="form-group">
-          <label>3. 직업 (학생, 직장인 등) <span class="required">*</span></label>
+          <label>3. 성별 <span class="required">*</span></label>
+          <div class="gender-btn-group" id="gender-btn-group">
+            <button type="button" class="btn-gender" data-gender="남성">남성</button>
+            <button type="button" class="btn-gender" data-gender="여성">여성</button>
+          </div>
+          <input type="hidden" id="beta-gender" value="">
+        </div>
+        <div class="form-group">
+          <label>4. 직업 (학생, 직장인 등) <span class="required">*</span></label>
           <input type="text" id="beta-job" placeholder="예시) 00대학생" autocomplete="off">
         </div>
         <div class="form-group">
-          <label>4. 전화번호 <span class="required">*</span><br><span class="label-hint">(추후 영혼의 유형에 어울리는 나만의 굿즈 이벤트에 사용됩니다.)</span></label>
+          <label>5. 전화번호 <span class="required">*</span><br><span class="label-hint">(추후 영혼의 유형에 어울리는 나만의 굿즈 이벤트에 사용됩니다.)</span></label>
           <input type="text" id="beta-contact" placeholder="예: 010-1234-5678" autocomplete="off">
         </div>
         <div class="form-group checkbox-group">
@@ -255,6 +263,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="script.js?v=20260905_ch_fix"></script>
+  <script src="script.js?v=20260905_gender"></script>
 </body>
 </html>
