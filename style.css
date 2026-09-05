@@ -478,12 +478,14 @@ input, button, select, textarea, ::placeholder {
 }
 
 .question-text {
-  font-family: 'NeoDunggeunmo', sans-serif;
-  font-size: 18px;
-  line-height: 1.6;
+  font-family: 'KMU80SungkokSerif', 'Noto Serif KR', serif !important;
+  font-size: 19px;
+  line-height: 1.65;
   margin-bottom: 14px;
-  color: #e5e2fc;
-  font-weight: 500;
+  color: #f3f0ff;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  word-break: keep-all;
 }
 
 /* 4-Column Rating Grid */
@@ -673,12 +675,14 @@ input, button, select, textarea, ::placeholder {
 }
 
 .question-text {
-  font-family: 'NeoDunggeunmo', sans-serif;
-  font-size: 18px;
-  line-height: 1.6;
+  font-family: 'KMU80SungkokSerif', 'Noto Serif KR', serif !important;
+  font-size: 19px;
+  line-height: 1.65;
   margin-bottom: 14px;
-  color: #e5e2fc;
-  font-weight: 500;
+  color: #f3f0ff;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  word-break: keep-all;
 }
 
 /* 4-Column Rating Grid */
@@ -1246,5 +1250,177 @@ input, button, select, textarea, ::placeholder {
   }
   .result-npc-name {
     font-size: 26px;
+  }
+}
+
+
+/* ==========================================================================
+   Comprehensive Mobile & Touch Optimization (모바일 화면 최적화)
+   ========================================================================== */
+@media (max-width: 600px) {
+  body {
+    font-size: 16px;
+    padding: 0;
+  }
+
+  .app-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 12px 10px 32px !important;
+    margin: 0 !important;
+  }
+
+  .card {
+    padding: 20px 14px !important;
+    border-radius: 12px !important;
+    margin-bottom: 16px !important;
+  }
+
+  /* Intro Screen */
+  #intro-poster {
+    max-width: 96vw !important;
+    max-height: 85vh !important;
+  }
+
+  #intro-text {
+    font-size: 28px !important;
+    margin-top: 40vh !important;
+  }
+
+  /* Story / Dialog Screen */
+  .dialog-wrapper {
+    width: 100% !important;
+    padding: 0 8px !important;
+  }
+
+  .system-box {
+    padding: 16px !important;
+    border-radius: 12px !important;
+  }
+
+  .system-text {
+    font-size: 16px !important;
+    line-height: 1.65 !important;
+  }
+
+  /* User Info Screen */
+  .input-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .input-field input {
+    font-size: 16px !important; /* Prevents auto-zoom on iOS */
+    padding: 14px 12px !important;
+  }
+
+  /* Progress Bar */
+  .progress-container {
+    padding: 6px 10px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .progress-bar-wrap {
+    height: 8px !important;
+  }
+
+  .progress-character {
+    font-size: 18px !important;
+    top: -12px !important;
+  }
+
+  /* Quiz Question Block */
+  .question-block {
+    margin-bottom: 20px !important;
+    padding-bottom: 18px !important;
+  }
+
+  .question-text {
+    font-size: 17.5px !important;
+    line-height: 1.6 !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* Likert Options: Comfortable touch target on mobile */
+  .options-row {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 6px !important;
+  }
+
+  .option-label {
+    padding: 14px 2px !important;
+    border-radius: 10px !important;
+    min-height: 52px !important;
+  }
+
+  .option-label span {
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.03em !important;
+  }
+
+  /* Result Screen */
+  .result-npc-name {
+    font-size: 26px !important;
+  }
+
+  .result-tagline {
+    font-size: 14px !important;
+  }
+
+  .result-grid-container {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .result-grid-item {
+    padding: 10px 8px !important;
+  }
+
+  .grid-item-label {
+    font-size: 12px !important;
+  }
+
+  .grid-item-value {
+    font-size: 13px !important;
+  }
+
+  /* Turnaround 3 Views */
+  .turnaround-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+  }
+
+  .turnaround-img-wrap {
+    height: 170px !important;
+  }
+
+  .turnaround-box {
+    padding: 8px 4px !important;
+  }
+
+  /* 2x2 Representative Items on mobile */
+  .items-cutout-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px 10px !important;
+  }
+
+  .item-img-wrap {
+    height: 120px !important;
+  }
+
+  .item-name {
+    font-size: 14px !important;
+  }
+
+  .item-desc {
+    font-size: 11px !important;
+  }
+
+  /* Buttons */
+  .btn {
+    padding: 14px !important;
+    font-size: 16px !important;
   }
 }
